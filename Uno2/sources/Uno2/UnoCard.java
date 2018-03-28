@@ -16,7 +16,7 @@ public class UnoCard {
 
     
 
-    public UnoCard() {
+    public UnoCard() { // no-args Constructor
         this.color=0;
         this.rank=0;
     }
