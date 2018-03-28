@@ -4,7 +4,7 @@ package Uno2;
 
 public class UnoCard {
     
-        // Class Variables that are a) shared, and b) immutable (constants) 
+        // Class Variables that are: a) shared, and b) immutable (constants) 
         public static final String[] RANKS = {"0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6",
                 "7", "7", "8", "8", "9", "9", "Skip", "Skip", "Reverse", "Reverse",
                 "DrawTwo", "DrawTwo", "Wild", "Wild", "Wild", "Wild", "WildDraw4", "WildDraw4","WildDraw4","WildDraw4"};
