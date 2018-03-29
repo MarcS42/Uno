@@ -47,6 +47,11 @@ public class UnoCard {
         return s;
     }
     
+    /**Determines if card1 matches card2
+     * @param unocard1 Card that is potential match
+     * @param unocard2 Prev. card you are trying to match
+     * @return
+     */
     public static boolean unoCardsMatch(UnoCard unocard1, UnoCard unocard2) { //unocard2 = PREV
         int unoCardTgtColor = 0;
         if (unocard2.getRank() > 24) { //Prev was wild and declared tgtColor

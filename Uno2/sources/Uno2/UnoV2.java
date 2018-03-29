@@ -24,8 +24,10 @@ public class UnoV2 {
      * Sets up initial game State.
      * Gets Player input from user
      * Initializes Player instances and ArrayList<Player> objects
-     * Start with a deck, shuffle it, deal the hands to the players, 
-     * put a card into the discard pile, then deal rest of deck to draw pile.
+     * Start with a deck, shuffle it, 
+     *      deal the hands to the players, 
+     * put initial card into the discard pile, then deal rest 
+     *         of deck to draw pile.
      */
     public UnoV2() { //Uno Constructor
         in = new Scanner(System.in);
@@ -34,11 +36,7 @@ public class UnoV2 {
         int handSize = 7;
         int numberPlayers;
 //        String playerName;
-        clockwise = true;
-        skip = false;
-        firstPass = true;
-        wildColor=4;
-        
+
         UnoDeck deck = new UnoDeck("Deck");
         deck.shuffle();
 
@@ -54,15 +52,23 @@ public class UnoV2 {
             UnoHand.insertionSortUnoHand(newPlayer.getHand());
             players.add(newPlayer);
         }
+        
         player = players.get(0);
+        
         discardPile = new UnoHand("Discards");
         deck.deal(discardPile, 1);
-        while (discardPile.getCard(0).getColor()>3){// wont let 1st card be wild
+//     1st card cannot be wild
+        while (discardPile.getCard(0).getColor()>3){
             deck.addCard(discardPile.popCard());
             deck.shuffle();
             deck.deal(discardPile, 1);
         }
-
+        
+        clockwise = true;
+        skip = false;
+        firstPass = true;
+        wildColor=4;
+        
         drawPile = new UnoHand("Draw Pile");
         deck.dealAll(drawPile);
     }//End constructor
@@ -135,14 +141,19 @@ public class UnoV2 {
     }
     
     /** For when drawPile runs out of cards.
-     * Removes top card from discardPile, makes discardPile the drawPile and then shuffles
+     * Removes top card from discardPile, makes discardPile 
+     * the drawPile and then shuffles
      * it; adds top card to new discardPile
      */
     public void reshuffle() {
-        UnoCard prev = discardPile.popCard(); //remove top card from discard pile
-        discardPile.dealAll(drawPile); //transfer remaining discard pile to new draw pile
-        drawPile.shuffle();  //shuffle new draw pile
-        discardPile.addCard(prev); //add back the orig top card to the new draw pile
+//    remove top card from discard pile
+        UnoCard prev = discardPile.popCard(); 
+//    transfer remaining discard pile to new draw pile
+        discardPile.dealAll(drawPile);
+//    shuffle new draw pile        
+        drawPile.shuffle();
+//    add back the orig top card to the new draw pile
+        discardPile.addCard(prev);
     }
     
     /**
@@ -186,8 +197,9 @@ public class UnoV2 {
             } while (!wd4MatchCheck && i > -1);
 
             /**
-             * When you get to this If Check you know that there are no more WD4
-             * matches and player will be picking cards and then returning from
+             * When you get to this If Check you know that 
+             * there are no more WD4 matches and player will
+             * be picking cards and then returning from
              * drawWildDrawFour() to SpecialCardWD4 IF statement
              */
             if (!wd4MatchCheck) {
@@ -196,14 +208,17 @@ public class UnoV2 {
                     System.out.println(player.getName() + " draws " + unocard);
                     player.getHand().addCard(unocard);
                 }
-                /**
-                 * Need to use setPlayer() as 'players' running thru drawWildDrawFour() do 
-                 * not have any scope access to player on record in SpecialCard(prev) 
-                 * waterfall filters. 
-                 * So if nextPlayer() advances you more than one 
-                 * player via playing follow-on WD4 card, player in takeTurn() <> 
-                 * sync with player coming out of drawWildDrawFour().         
-                 */
+            /**
+             * Need to use setPlayer() as 'players' running 
+             * thru drawWildDrawFour() do not have any 
+             * scope access to player on record in  
+             * SpecialCard(prev) waterfall filters. 
+             * 
+             * So if nextPlayer() advances you more than one 
+             * player via playing follow-on WD4 card, player 
+             * in takeTurn() <> sync with player coming out 
+             * of drawWildDrawFour().         
+             */
                 System.out.println("");
                 if (wd4CardsPlayed > 1) {
                     setPlayer(player);
@@ -212,15 +227,18 @@ public class UnoV2 {
                 return player;
             } 
          }while (wd4CardsPlayed >= 1); 
-      /** This return never gets hit, but if you pull it, get problems with
-       *  drawTurn() bug detection looking for return statement
+      /** This return never gets hit, but if you pull it, 
+       * get problems with drawTurn() bug detection
+       *   looking for return statement
        */
          return player; 
     }//End wildDrawFour()
         
     /**
-     * card PREV was DrawTwo checks if next player has D2, if not draws2
-     * if so, plays it and keeps track of how many D2s have been played 
+     * card PREV was DrawTwo checks if next player has D2, 
+     * if not draws2;
+     * if so, plays D2 and keeps track of how many D2s have 
+     * been played 
      * in a row
      */
     public UnoPlayer drawTwo(UnoPlayer player, int d2CardsPlayed) {
@@ -280,7 +298,7 @@ public class UnoV2 {
     }//End drawTwo()
 
     /**
-     * Pick wild card color
+     * Pick random wild card color
      * @return int color
      */
     public int unoWildCardColor() {
