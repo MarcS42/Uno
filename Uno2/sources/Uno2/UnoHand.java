@@ -79,12 +79,14 @@ public class UnoHand{
        return unohand.isEmpty();
    }
    
-   public UnoCard popCard() { // "overloaded" removes top card, no need to shift left
+// "overloaded" removes top card, no need to shift left   
+   public UnoCard popCard() { 
        int i = unohand.size() - 1;
        return unohand.remove(i);
    }
    
-   public UnoCard popCard(int i) { // removes card[i], and shifts all cards above to left
+// removes card[i], and shifts all cards above to left   
+   public UnoCard popCard(int i) { 
        return unohand.remove(i);
    }
  
@@ -111,7 +113,8 @@ public class UnoHand{
        }
    }
    
-   /*gets last card from calling CardCollection, but doesn't remove it*/
+   /*gets last card from calling CardCollection, 
+    * but doesn't remove it*/
    public UnoCard last() {
        int i = handSize()-1;
        return getCard(i);
