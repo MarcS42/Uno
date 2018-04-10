@@ -379,7 +379,7 @@ public class UnoV2 {
                 wildColor=unoWildCardColor();
                 discardPile.addCard(next);
                 System.out.println(player.getName() + " plays " + next + 
-                        " Match "+ UnoCard.COLORS[wildColor]);
+                        " Match "+ UnoCard.getColors()[wildColor]);
                 System.out.println(); 
                 player = nextPlayer(player);
             }
@@ -387,7 +387,7 @@ public class UnoV2 {
                 wildColor=unoWildCardColor();
                 discardPile.addCard(next);
                 System.out.println(player.getName() + " plays " + next + 
-                        " Match "+ UnoCard.COLORS[wildColor]);
+                        " Match "+ UnoCard.getColors()[wildColor]);
                 System.out.println();
                 player = nextPlayer(player);
             }

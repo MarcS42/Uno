@@ -77,7 +77,7 @@ public class UnoPlayer {
             }
             if(UnoSpecialCardsV2.unoCardWildDrawFour(prev)) {
                 int unoCardTgtColor = UnoV2.getWildColor();
-                System.out.println("unoCardTgtColor into WD4 SearchForMatch " + UnoCard.COLORS[unoCardTgtColor]);
+                System.out.println("unoCardTgtColor into WD4 SearchForMatch " + UnoCard.getColors()[unoCardTgtColor]);
                 for (int i = hand.handSize()-1; i >=0;i--) {
                     UnoCard unocard = hand.getCard(i);
                     if ((unocard.getColor() == unoCardTgtColor) || unocard.getRank() > 24) {

@@ -24,7 +24,7 @@ public class UnoDeck {
         /**
          * Here is where wild cards and DrawFour are added
          */
-        for (int rank = 25; rank < UnoCard.RANKS.length; rank++) {
+        for (int rank = 25; rank < UnoCard.getRanks().length; rank++) {
             int color = 4; // Black for wild cards
             addCard(new UnoCard(color, rank));
         }
