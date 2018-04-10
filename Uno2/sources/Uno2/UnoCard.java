@@ -20,16 +20,16 @@ public class UnoCard {
             return RANKS;
         }
 
+       
+        private static final String[] COLORS = {"Yellow", "Blue", 
+                "Green", "Red", "Black"};
+        
         /**
          * @return the colors
          */
         public static String[] getColors() {
             return COLORS;
         }
-
-        private static final String[] COLORS = {"Yellow", "Blue", 
-                "Green", "Red", "Black"};
-
         
         private final int color; // 'final' keeps guys from messing with these and
         private final int rank; // can only assign values within a constructor
