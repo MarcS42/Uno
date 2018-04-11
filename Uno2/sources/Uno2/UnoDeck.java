@@ -9,6 +9,9 @@ public class UnoDeck {
     
     /**
      * Constructor - UnoDeck with wild cards
+     * Initializes ArrayList<UnoCard> unocards deck
+     * Adds non-wild cards of Y,B, G, R colors to deck
+     * Adds Wild and WD4 to deck
      * 
      * @param label
      */
@@ -31,10 +34,6 @@ public class UnoDeck {
 
     } // End Constructor
     
-    public String toString() {
-        return label + ":" + unocards.toString();
-    }
-    
     public String getLabel() {
         return label;
     }
@@ -43,12 +42,17 @@ public class UnoDeck {
         return unocards;
     }
     
+    /**Return UnoCard at specific index position 
+     * from AL unocards
+     * @param i AL integer position of desired card
+     * @return UnoCard at position i in AL unocards [the deck]
+     */
     public UnoCard getCard(int i) {
         return unocards.get(i);
     }
     
     /** Deal(that,n) Removes n cards from this.UnoDeck, and
-     *  adds n cards to that.UnoDeck*/
+     *  adds n cards to that.UnoHand*/
     public void deal(UnoHand that, int n) {
         for (int i=0; i < n; i++) {
             UnoCard unocard = popCard();
@@ -56,7 +60,7 @@ public class UnoDeck {
         }
     }
     
-    /**moves all remaining cards to the given UnoDeck
+    /**moves all remaining cards to that given UnoHand
      * 
      **/
     public void dealAll(UnoHand that) {
@@ -64,25 +68,41 @@ public class UnoDeck {
         deal(that, n);
     }
     
+    /**Used in Constructor
+     * @param unocard: card to be added to deck
+     */
     public void addCard(UnoCard unocard) {
         unocards.add(unocard);
     }
     
-    public UnoCard popCard(int i) { // removes unocard[i], and shifts all cards above to left
+    /**Removes AL unocard[i], and shifts all cards 
+     * above it to the left
+     * @param i int of tgt card in ArrayList
+     * @return card removed from specific index posit.
+     */
+    public UnoCard popCard(int i) { 
         return unocards.remove(i);
     }
 
-    public UnoCard popCard() { // "overloaded" removes top card, no need to shift left
+    /**"overloaded" Removes top card, no need to shift left
+     * @return top/last card
+     */
+    public UnoCard popCard() { 
         int i = unocards.size() - 1;
         return unocards.remove(i);
     }
     
-    /*gets last card from calling UnoDeck, but doesn't remove it*/
+    /**gets last card from calling UnoDeck, but 
+     * doesn't remove it
+     */
     public UnoCard last() {
         int i = size()-1;
         return getCard(i);
     }
 
+    /**Checks if unocards AL is empty
+     * @return true if deck is empty
+     */
     public boolean empty() {
         return unocards.size() == 0;
     }
@@ -93,12 +113,28 @@ public class UnoDeck {
         }
     }
     
+    @Override
+    public String toString() {
+        return label + ":" + unocards.toString();
+    }
+
+    /** Swaps card posit's, using set(index, card) 
+     * in unocards AL deck
+     * @param i 1st card
+     * @param j 2nd card
+     */
     public void swapCards(int i, int j) {
         UnoCard temp = getCard(i);
         unocards.set(i, getCard(j));
         unocards.set(j, temp);
     }
     
+    /**Shuffles deck by generating random integer j,
+     * Running through deck, and then 
+     * swapping current card i with card at
+     * randomly generated posit. j
+     * 
+     */
     public void shuffle() {
         Random rand = new Random();
         for (int i= size()-1; i > 0; i--) {
@@ -107,6 +143,9 @@ public class UnoDeck {
         }
     }
     
+    /**
+     * @return size of unocards deck
+     */
     public int size() {
         return unocards.size();
     }
