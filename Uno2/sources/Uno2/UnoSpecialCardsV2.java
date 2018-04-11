@@ -18,7 +18,7 @@ public class UnoSpecialCardsV2 extends UnoCard {
         /**
          * SpecialCard true/false    
          * @param unocard
-         * @return
+         * @return true if Rank > 19
          */
         public static boolean unoSpecialCard(UnoCard unocard) {
             specialCard = false;
@@ -31,7 +31,7 @@ public class UnoSpecialCardsV2 extends UnoCard {
         /**
          * skip true/false
          * @param unocard
-         * @return
+         * @return True if 18 < Rank < 21
          */
         public static boolean unoCardSkip(UnoCard unocard){
             skip = false;
@@ -40,10 +40,11 @@ public class UnoSpecialCardsV2 extends UnoCard {
             }
             return skip;
         }
+        
         /**
          * Reverse = reverse+skip
          * @param unocard
-         * @return
+         * @return true if 20 < Rank < 23
          */
         public static boolean unoCardReverse(UnoCard unocard){
             reverse = false;
@@ -56,7 +57,7 @@ public class UnoSpecialCardsV2 extends UnoCard {
         /**
          * DrawTwo = drawTwo
          * @param unocard
-         * @return
+         * @return true if 22 < Rank < 25
          */
         public static boolean unoCardDrawTwo(UnoCard unocard){
             drawTwo = false;
@@ -66,6 +67,10 @@ public class UnoSpecialCardsV2 extends UnoCard {
             return drawTwo;
         }
         
+        /**Simulates Player Picking a Color when playing 
+         * a wild card or WD4
+         * @return int representing index of COLORS[Y, B, G, R]
+         */
         public static int randomColor() {
             Random randomColor = new Random();
             return randomColor.nextInt(4);
@@ -74,7 +79,7 @@ public class UnoSpecialCardsV2 extends UnoCard {
         /**
          * Wild = wild + user input color
          * @param unocard
-         * @return
+         * @return true if 24 < Rank < 29
          */
         public static boolean unoCardWild(UnoCard unocard){
             wild = false;
@@ -87,7 +92,7 @@ public class UnoSpecialCardsV2 extends UnoCard {
     /**
      * WildDrawFour=wild+user input color+drawFour+skip
      * @param unocard
-     * @return
+     * @return true if 28 < Rank <= 32
      */
         public static boolean unoCardWildDrawFour(UnoCard unocard){
             wildDrawFour = false;
