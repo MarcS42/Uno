@@ -4,12 +4,12 @@ package Uno2;
 import java.util.Random;
 
 public class UnoSpecialCardsV2 extends UnoCard {
-        public static boolean specialCard;
-        public static boolean skip;
-        public static boolean reverse;
-        public static boolean drawTwo;
-        public static boolean wild;
-        public static boolean wildDrawFour;
+        private static boolean specialCard;
+        private static boolean skip;
+        private static boolean reverse;
+        private static boolean drawTwo;
+        private static boolean wild;
+        private static boolean wildDrawFour;
         
         public UnoSpecialCardsV2(int color, int rank) {
             super(color,  rank);
