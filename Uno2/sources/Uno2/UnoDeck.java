@@ -34,16 +34,9 @@ public class UnoDeck {
 
     } // End Constructor
     
-    public String getLabel() {
-        return label;
-    }
-    
-    public ArrayList<UnoCard> getUnoCards() {
-        return unocards;
-    }
-    
     /**Return UnoCard at specific index position 
-     * from AL unocards
+     * from AL unocards.
+     * Used in SwapCard(int, int) helper method.
      * @param i AL integer position of desired card
      * @return UnoCard at position i in AL unocards [the deck]
      */
@@ -60,7 +53,8 @@ public class UnoDeck {
         }
     }
     
-    /**moves all remaining cards to that given UnoHand
+    /**Used in UnoV2 Class Constructor (drawPile)
+     * moves all remaining cards to that given UnoHand
      * 
      **/
     public void dealAll(UnoHand that) {
@@ -68,36 +62,6 @@ public class UnoDeck {
         deal(that, n);
     }
     
-    /** 
-     * Same method in UnoHand Class, but need it here for 
-     * direct class access / utility helper method in deck 
-     * deal().
-     * Removes top card, no need to shift left
-     * @return top/last card
-     */
-    public UnoCard popCard() { 
-        int i = size() - 1;
-        return unocards.remove(i);
-    }
-    
-    /**Checks if unocards AL is empty
-     * @return true if deck is empty
-     */
-    public boolean empty() {
-        return unocards.size() == 0;
-    }
-  
-    public void printDeck(ArrayList<UnoCard> unocards) {
-        for(int i=0; i < unocards.size(); i++) {
-            System.out.println(getCard(i));
-        }
-    }
-    
-    @Override
-    public String toString() {
-        return label + ":" + unocards.toString();
-    }
-
     /**Shuffles deck by generating random integer j,
      * Running through deck, and then 
      * swapping current card i with card at
@@ -111,9 +75,38 @@ public class UnoDeck {
             swapCards(i,j);
         }
     }
+
+ /**
+  * Begin Helper Utility Methods
+  */   
     
+    public void printDeck(ArrayList<UnoCard> unocards) {
+        for(int i=0; i < unocards.size(); i++) {
+            System.out.println(getCard(i));
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return label + ":" + unocards.toString();
+    }
+
+    /** 
+     * Same method in UnoHand Class, but need it here for 
+     * direct class access / utility helper method in deck 
+     * deal().
+     * 
+     * Removes top card, no need to shift left
+     * @return top/last card
+     */
+    public UnoCard popCard() { 
+        int i = size() - 1;
+        return unocards.remove(i);
+    }
+
     /** Swaps card posit's, using set(index, card) 
      * in unocards AL deck
+     * Used in Shuffle()
      * @param i 1st card
      * @param j 2nd card
      */
@@ -130,7 +123,7 @@ public class UnoDeck {
         unocards.add(unocard);
     }
 
-    /**Used in dealAll(UnoHand)
+    /**Used in dealAll(UnoHand) and many For Control Loops
      * @return size of unocards deck
      */
     public int size() {

@@ -13,8 +13,8 @@ import java.util.Random;
  *
  */
 public class UnoHand{
-    public String label;
-    public ArrayList<UnoCard> unohand;
+    private String label;
+    private ArrayList<UnoCard> unohand;
 
     public UnoHand(String label) {
         this.label = label;
@@ -65,6 +65,9 @@ public class UnoHand{
        unohand.add(unocard);
    } 
  
+   /**Checks if unohand AL is empty
+    * @return true if hand is empty
+    */
    public boolean empty() {
        return unohand.isEmpty();
    }
