@@ -21,18 +21,11 @@ public class UnoHand{
         this.unohand = new ArrayList<UnoCard>();
     }
     
-    public UnoCard getCard(int i) {
-        return unohand.get(i);
-    }
-       
-    public String getLabel() {
-        return label;
-    }
-    
     public static UnoHand insertionSortUnoHand(UnoHand unohand) {
         for (int i = 1; i < unohand.handSize(); i++) {
             for(int k= i; (k>0 && (UnoCard.compareUnoCards
-               (unohand.getCard(k), unohand.getCard(k - 1)) < 1)); k--) {
+             (unohand.getCard(k), unohand.getCard(k - 1)) < 1));
+                    k--) {
                 unohand.swapCards(k,k-1);
             }
         }
@@ -52,7 +45,10 @@ public class UnoHand{
        }
        
    
-   public void display() {
+   /**Used in UnoV2 displayState()
+ * 
+ */
+public void display() {
        System.out.println(getLabel() + ": ");
        for (int i =0; i < handSize(); i++) {
            System.out.println(getCard(i));
@@ -61,10 +57,6 @@ public class UnoHand{
        System.out.println();
    }
    
-   public void addCard(UnoCard unocard) {
-       unohand.add(unocard);
-   } 
- 
    /**Checks if unohand AL is empty
     * @return true if hand is empty
     */
@@ -72,24 +64,7 @@ public class UnoHand{
        return unohand.isEmpty();
    }
 
-   /**Removes AL unocard[i], and shifts all cards 
-    * above it to the left
-    * @param i int of tgt card in ArrayList
-    * @return card removed from specific index posit.
-    */   
-   public UnoCard popCard(int i) { 
-       return unohand.remove(i);
-   }
- 
-   /**"overloaded" Removes top card, no need to shift left
-    * @return top/last card
-    */
-   public UnoCard popCard() { 
-       int i = handSize() - 1;
-       return unohand.remove(i);
-   }
-
-/*moves all remaining cards to the given CardCollection*/
+   /*moves all remaining cards to the given CardCollection*/
    public void dealAll(UnoHand that) {
        int n = handSize();
        deal(that, n);
@@ -104,7 +79,12 @@ public class UnoHand{
        }
    }
    
-   public void shuffle() {
+   /**Used in reshuffle of discardPile when 
+    * discardPile becomes drawPile. 
+    * These 'Piles' are UnoHands
+ * 
+ */
+public void shuffle() {
        Random rand = new Random();
        for (int i= handSize()-1; i > 0; i--) {
            int j = rand.nextInt(i);
@@ -112,17 +92,68 @@ public class UnoHand{
        }
    }
    
-   public void swapCards(int i, int j) {
+   /**-----------------------------------------
+    * Begin Unohand Helper/Utility methods
+    */
+   
+   /**Removes AL unocard[i], and shifts all cards 
+    * above it to the left
+    * Used in UnoV2 and UnoPlayer
+    * @param i int of tgt card in ArrayList
+    * @return card removed from specific index posit.
+    */   
+   public UnoCard popCard(int i) { 
+       return unohand.remove(i);
+   }
+
+/**Used in draw, deal(Hand, int), UnoV2 Constructor
+ * "overloaded" Removes top card, no need to shift left
+    * @return top/last card
+    */
+   public UnoCard popCard() { 
+       int i = handSize() - 1;
+       return unohand.remove(i);
+   }
+
+public void swapCards(int i, int j) {
     UnoCard temp = getCard(i);
     unohand.set(i, getCard(j));
     unohand.set(j, temp);
 }
 
+/**Used in display() here which, in turn, is used 
+ * in UnoV2 displayState().
+ * 
+ * @return
+ */
+public String getLabel() {
+    return label;
+}
+
+/**Used in many methods in UnoPlayer, UnoHand, and 
+ * UnoV2
+ * @param i int index position of desired card in AL
+ * @return Card at index posit. i in UnoHand
+ */
+public UnoCard getCard(int i) {
+    return unohand.get(i);
+}
+
+/**Helper/Utility method.
+    * Used in many methods
+ * @param unocard card to be added to end of unohand AL
+ */
+public void addCard(UnoCard unocard) {
+       unohand.add(unocard);
+   }
+
 public int handSize() {
     return unohand.size();
 }
 
-/*gets last card from calling CardCollection, 
+/*Used in UnoV2 takeTurn()
+ * gets last card from calling CardCollection, 
+    * 
     * but doesn't remove it*/
    public UnoCard last() {
        int i = handSize()-1;

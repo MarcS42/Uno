@@ -34,16 +34,6 @@ public class UnoDeck {
 
     } // End Constructor
     
-    /**Return UnoCard at specific index position 
-     * from AL unocards.
-     * Used in SwapCard(int, int) helper method.
-     * @param i AL integer position of desired card
-     * @return UnoCard at position i in AL unocards [the deck]
-     */
-    public UnoCard getCard(int i) {
-        return unocards.get(i);
-    }
-    
     /** Deal(that,n) Removes n cards from this.UnoDeck, and
      *  adds n cards to that.UnoHand*/
     public void deal(UnoHand that, int n) {
@@ -114,6 +104,16 @@ public class UnoDeck {
         UnoCard temp = getCard(i);
         unocards.set(i, getCard(j));
         unocards.set(j, temp);
+    }
+
+    /**Return UnoCard at specific index position 
+     * from AL unocards.
+     * Used in SwapCard(int, int) helper method.
+     * @param i AL integer position of desired card
+     * @return UnoCard at position i in AL unocards [the deck]
+     */
+    public UnoCard getCard(int i) {
+        return unocards.get(i);
     }
 
     /**Used in Constructor
