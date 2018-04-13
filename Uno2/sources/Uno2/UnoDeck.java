@@ -68,18 +68,9 @@ public class UnoDeck {
         deal(that, n);
     }
     
-    /**Removes AL unocard[i], and shifts all cards 
-     * above it to the left
-     * @param i int of tgt card in ArrayList
-     * @return card removed from specific index posit.
-     */
-//    public UnoCard popCard(int i) { 
-//        return unocards.remove(i);
-//    }
-
-    /**"overloaded" 
+    /** 
      * Same method in UnoHand Class, but need it here for 
-     * direct class access utility helper method in deck 
+     * direct class access / utility helper method in deck 
      * deal().
      * Removes top card, no need to shift left
      * @return top/last card
