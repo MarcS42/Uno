@@ -78,19 +78,25 @@ public class UnoHand{
    public boolean empty() {
        return unohand.isEmpty();
    }
-   
-// "overloaded" removes top card, no need to shift left   
-   public UnoCard popCard() { 
-       int i = unohand.size() - 1;
-       return unohand.remove(i);
-   }
-   
-// removes card[i], and shifts all cards above to left   
+
+   /**Removes AL unocard[i], and shifts all cards 
+    * above it to the left
+    * @param i int of tgt card in ArrayList
+    * @return card removed from specific index posit.
+    */   
    public UnoCard popCard(int i) { 
        return unohand.remove(i);
    }
  
-   /*moves all remaining cards to the given CardCollection*/
+   /**"overloaded" Removes top card, no need to shift left
+    * @return top/last card
+    */
+   public UnoCard popCard() { 
+       int i = unohand.size() - 1;
+       return unohand.remove(i);
+   }
+
+/*moves all remaining cards to the given CardCollection*/
    public void dealAll(UnoHand that) {
        int n = handSize();
        deal(that, n);

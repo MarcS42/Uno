@@ -68,23 +68,20 @@ public class UnoDeck {
         deal(that, n);
     }
     
-    /**Used in Constructor
-     * @param unocard: card to be added to deck
-     */
-    public void addCard(UnoCard unocard) {
-        unocards.add(unocard);
-    }
-    
     /**Removes AL unocard[i], and shifts all cards 
      * above it to the left
      * @param i int of tgt card in ArrayList
      * @return card removed from specific index posit.
      */
-    public UnoCard popCard(int i) { 
-        return unocards.remove(i);
-    }
+//    public UnoCard popCard(int i) { 
+//        return unocards.remove(i);
+//    }
 
-    /**"overloaded" Removes top card, no need to shift left
+    /**"overloaded" 
+     * Same method in UnoHand Class, but need it here for 
+     * direct class access utility helper method in deck 
+     * deal().
+     * Removes top card, no need to shift left
      * @return top/last card
      */
     public UnoCard popCard() { 
@@ -92,14 +89,6 @@ public class UnoDeck {
         return unocards.remove(i);
     }
     
-    /**gets last card from calling UnoDeck, but 
-     * doesn't remove it
-     */
-    public UnoCard last() {
-        int i = size()-1;
-        return getCard(i);
-    }
-
     /**Checks if unocards AL is empty
      * @return true if deck is empty
      */
@@ -118,17 +107,6 @@ public class UnoDeck {
         return label + ":" + unocards.toString();
     }
 
-    /** Swaps card posit's, using set(index, card) 
-     * in unocards AL deck
-     * @param i 1st card
-     * @param j 2nd card
-     */
-    public void swapCards(int i, int j) {
-        UnoCard temp = getCard(i);
-        unocards.set(i, getCard(j));
-        unocards.set(j, temp);
-    }
-    
     /**Shuffles deck by generating random integer j,
      * Running through deck, and then 
      * swapping current card i with card at
@@ -143,7 +121,25 @@ public class UnoDeck {
         }
     }
     
-    /**
+    /** Swaps card posit's, using set(index, card) 
+     * in unocards AL deck
+     * @param i 1st card
+     * @param j 2nd card
+     */
+    public void swapCards(int i, int j) {
+        UnoCard temp = getCard(i);
+        unocards.set(i, getCard(j));
+        unocards.set(j, temp);
+    }
+
+    /**Used in Constructor
+     * @param unocard: card to be added to deck
+     */
+    public void addCard(UnoCard unocard) {
+        unocards.add(unocard);
+    }
+
+    /**Used in dealAll(UnoHand)
      * @return size of unocards deck
      */
     public int size() {

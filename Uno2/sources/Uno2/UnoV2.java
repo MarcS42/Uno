@@ -28,6 +28,7 @@ public class UnoV2 {
      *      deal the hands to the players, 
      * put initial card into the discard pile, then deal rest 
      *         of deck to draw pile.
+     * Initialize key game variables starting values.
      */
     public UnoV2() { //Uno Constructor
         in = new Scanner(System.in);
@@ -53,8 +54,6 @@ public class UnoV2 {
             players.add(newPlayer);
         }
         
-        player = players.get(0);
-        
         discardPile = new UnoHand("Discards");
         deck.deal(discardPile, 1);
 //     1st card cannot be wild
@@ -63,7 +62,9 @@ public class UnoV2 {
             deck.shuffle();
             deck.deal(discardPile, 1);
         }
-        
+
+// initialize state of key game variables
+        player = players.get(0);
         clockwise = true;
         skip = false;
         firstPass = true;
