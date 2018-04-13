@@ -76,7 +76,7 @@ public class UnoDeck {
      * @return top/last card
      */
     public UnoCard popCard() { 
-        int i = unocards.size() - 1;
+        int i = size() - 1;
         return unocards.remove(i);
     }
     

@@ -29,16 +29,6 @@ public class UnoHand{
         return label;
     }
     
-    public int handSize() {
-        return unohand.size();
-    }
-    
-    public void swapCards(int i, int j) {
-        UnoCard temp = getCard(i);
-        unohand.set(i, getCard(j));
-        unohand.set(j, temp);
-    }
-    
     public static UnoHand insertionSortUnoHand(UnoHand unohand) {
         for (int i = 1; i < unohand.handSize(); i++) {
             for(int k= i; (k>0 && (UnoCard.compareUnoCards
@@ -92,7 +82,7 @@ public class UnoHand{
     * @return top/last card
     */
    public UnoCard popCard() { 
-       int i = unohand.size() - 1;
+       int i = handSize() - 1;
        return unohand.remove(i);
    }
 
@@ -119,7 +109,17 @@ public class UnoHand{
        }
    }
    
-   /*gets last card from calling CardCollection, 
+   public void swapCards(int i, int j) {
+    UnoCard temp = getCard(i);
+    unohand.set(i, getCard(j));
+    unohand.set(j, temp);
+}
+
+public int handSize() {
+    return unohand.size();
+}
+
+/*gets last card from calling CardCollection, 
     * but doesn't remove it*/
    public UnoCard last() {
        int i = handSize()-1;
