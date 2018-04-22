@@ -469,9 +469,8 @@ public class UnoV2 {
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        UnoV2 game = new UnoV2();
-        game.playGame();
+//        UnoV2 game = new UnoV2();
+//        game.playGame();
 
     }
 

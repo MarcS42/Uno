@@ -3,22 +3,20 @@ package Uno2;
 
 import java.util.Random;
 
-public class UnoSpecialCardsV2 extends UnoCard {
+public class UnoSpecialCardsV2 {
         private static boolean specialCard;
         private static boolean skip;
         private static boolean reverse;
         private static boolean drawTwo;
+        private static boolean specialNotWildWD4;
+        private static boolean wildWD4;
         private static boolean wild;
         private static boolean wildDrawFour;
-        
-        public UnoSpecialCardsV2(int color, int rank) {
-            super(color,  rank);
-            }
         
         /**
          * SpecialCard true/false    
          * @param unocard
-         * @return true if Rank > 19
+         * @return true if Rank > 18
          */
         public static boolean unoSpecialCard(UnoCard unocard) {
             specialCard = false;
@@ -75,7 +73,35 @@ public class UnoSpecialCardsV2 extends UnoCard {
             Random randomColor = new Random();
             return randomColor.nextInt(4);
         }
+        
+        /**
+         * SpecialNotWild
+         * @param unocard
+         * @return true if 18 < Rank < 25
+         */
+        public static boolean specialNotWild(UnoCard unocard){
+            specialNotWildWD4 = false;
+            if (unocard.getRank() > 18 && 
+                    unocard.getRank() < 25) 
+            {
+                specialNotWildWD4 = true; 
+            }
+            return specialNotWildWD4;
+        }
 
+        /**
+         * Wild or WD4
+         * @param unocard
+         * @return true if 24 < Rank < 33
+         */
+        public static boolean uCardWldorWD4(UnoCard unocard){
+            wildWD4 = false;
+            if (unocard.getRank() > 24 && unocard.getRank() < 33) {
+                wildWD4 = true; 
+            }
+            return wildWD4;
+        }
+        
         /**
          * Wild = wild + user input color
          * @param unocard
@@ -83,7 +109,8 @@ public class UnoSpecialCardsV2 extends UnoCard {
          */
         public static boolean unoCardWild(UnoCard unocard){
             wild = false;
-            if (unocard.getRank() > 24 && unocard.getRank()<29) {
+            if (unocard.getRank() > 24 && 
+                    unocard.getRank()<29) {
                 wild = true; 
             }
             return wild;

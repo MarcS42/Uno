@@ -6,16 +6,15 @@ package Uno2;
 
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * @author MarcSherman
  *
  */
-public class UnoHand{
-    private String label;
+public class UnoHand extends CardDeck{
     private ArrayList<UnoCard> unohand;
-
+    private String label;
+    
     public UnoHand(String label) {
         this.label = label;
         this.unohand = new ArrayList<UnoCard>();
@@ -39,11 +38,10 @@ public class UnoHand{
            int sum = 0;
            for(int i = 0; i < unohand.handSize(); i++) {
                UnoCard unocard = unohand.getCard(i);
-               sum += UnoCard.scoreCardUno(unocard);
+               sum += UnoCard.scoreCard(unocard);
            }
            return sum;     
        }
-       
    
    /**Used in UnoV2 displayState()
  * 
@@ -79,49 +77,13 @@ public void display() {
        }
    }
    
-   /**Used in reshuffle of discardPile when 
-    * discardPile becomes drawPile. 
-    * These 'Piles' are UnoHands
- * 
- */
-public void shuffle() {
-       Random rand = new Random();
-       for (int i= handSize()-1; i > 0; i--) {
-           int j = rand.nextInt(i);
-           swapCards(i,j);
-       }
-   }
+   
    
    /**-----------------------------------------
     * Begin Unohand Helper/Utility methods
     */
    
-   /**Removes AL unocard[i], and shifts all cards 
-    * above it to the left
-    * Used in UnoV2 and UnoPlayer
-    * @param i int of tgt card in ArrayList
-    * @return card removed from specific index posit.
-    */   
-   public UnoCard popCard(int i) { 
-       return unohand.remove(i);
-   }
-
-/**Used in draw, deal(Hand, int), UnoV2 Constructor
- * "overloaded" Removes top card, no need to shift left
-    * @return top/last card
-    */
-   public UnoCard popCard() { 
-       int i = handSize() - 1;
-       return unohand.remove(i);
-   }
-
-public void swapCards(int i, int j) {
-    UnoCard temp = getCard(i);
-    unohand.set(i, getCard(j));
-    unohand.set(j, temp);
-}
-
-/**Used in display() here which, in turn, is used 
+   /**Used in display() here which, in turn, is used 
  * in UnoV2 displayState().
  * 
  * @return
@@ -139,28 +101,24 @@ public UnoCard getCard(int i) {
     return unohand.get(i);
 }
 
-/**Helper/Utility method.
-    * Used in many methods
- * @param unocard card to be added to end of unohand AL
- */
-public void addCard(UnoCard unocard) {
-       unohand.add(unocard);
-   }
-
-public int handSize() {
-    return unohand.size();
-}
-
 /*Used in UnoV2 takeTurn()
  * gets last card from calling CardCollection, 
-    * 
-    * but doesn't remove it*/
+    * but doesn't remove it
+    * So it is like taking a look at the card
+    * */
    public UnoCard last() {
        int i = handSize()-1;
        return getCard(i);
    }
-   
-    /**
+
+/**Utility used wherever you need For control loop
+ * @return
+ */
+public int handSize() {
+    return unohand.size();
+}
+
+/**
      * @param args
      */
     public static void main(String[] args) {

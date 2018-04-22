@@ -3,27 +3,24 @@ package Uno2;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class UnoDeck {
-    private String label;
+public class UnoDeck extends CardDeck {
     private ArrayList<UnoCard> unocards;
     
     /**
      * Constructor - UnoDeck with wild cards
-     * Initializes ArrayList<UnoCard> unocards deck
+     * Initializes ArrayList<UnoCard> unocards 
+     * deck
      * Adds non-wild cards of Y,B, G, R colors to deck
      * Adds Wild and WD4 to deck
      * 
      * @param label
      */
     public UnoDeck(String label) {
-        this.label = label;
+        super(label);
         this.unocards = new ArrayList<UnoCard>();
 
-        for (int color = 0; color <= 3; color++) {
-            for (int rank = 0; rank <= 24; rank++) {
-                addCard(new UnoCard(color, rank));
-            }
-        }
+        cardDeckBuilder(24, 3);
+        
         /**
          * Here is where wild cards and DrawFour are added
          */
@@ -31,20 +28,36 @@ public class UnoDeck {
             int color = 4; // Black for wild cards
             addCard(new UnoCard(color, rank));
         }
-
     } // End Constructor
     
-    /** Deal(that,n) Removes n cards from this.UnoDeck, and
-     *  adds n cards to that.UnoHand*/
+    /**Trying to cleanup constructor
+     * abstract in CardDeck because Card is abstract
+     * and therefor cannot be instantiated
+     * @see Uno2.CardDeck#cardDeckBuilder(int, int)
+     */
+    protected void cardDeckBuilder(int rankMax, int colorMax) {
+        for (int color = 0; color <= colorMax; color++) {
+            for (int rank = 0; rank <= rankMax; rank++) {
+                addCard(new UnoCard(color, rank));
+            }
+        }
+    }
+    
+    /** Deal(that,n) Removes n cards from 
+     * this.UnoDeck, and
+     *  adds n cards to that.UnoHand
+     *  */
     public void deal(UnoHand that, int n) {
         for (int i=0; i < n; i++) {
-            UnoCard unocard = popCard();
+            UnoCard unocard = (UnoCard) popCard();
             that.addCard(unocard);
         }
     }
     
-    /**Used in UnoV2 Class Constructor (drawPile)
-     * moves all remaining cards to that given UnoHand
+    /**Used in UnoV2 Class Constructor 
+     * (drawPile)
+     * moves all remaining cards to that 
+     * given UnoHand
      * 
      **/
     public void dealAll(UnoHand that) {
@@ -52,58 +65,20 @@ public class UnoDeck {
         deal(that, n);
     }
     
-    /**Shuffles deck by generating random integer j,
-     * Running through deck, and then 
-     * swapping current card i with card at
-     * randomly generated posit. j
-     * 
-     */
-    public void shuffle() {
-        Random rand = new Random();
-        for (int i= size()-1; i > 0; i--) {
-            int j = rand.nextInt(i);
-            swapCards(i,j);
-        }
-    }
-
- /**
+    /**
   * Begin Helper Utility Methods
   */   
     
     public void printDeck(ArrayList<UnoCard> unocards) {
-        for(int i=0; i < unocards.size(); i++) {
-            System.out.println(getCard(i));
+        
+        for(UnoCard card:unocards) {
+            System.out.println(card);
         }
     }
     
     @Override
     public String toString() {
-        return label + ":" + unocards.toString();
-    }
-
-    /** 
-     * Same method in UnoHand Class, but need it here for 
-     * direct class access / utility helper method in deck 
-     * deal().
-     * 
-     * Removes top card, no need to shift left
-     * @return top/last card
-     */
-    public UnoCard popCard() { 
-        int i = size() - 1;
-        return unocards.remove(i);
-    }
-
-    /** Swaps card posit's, using set(index, card) 
-     * in unocards AL deck
-     * Used in Shuffle()
-     * @param i 1st card
-     * @param j 2nd card
-     */
-    public void swapCards(int i, int j) {
-        UnoCard temp = getCard(i);
-        unocards.set(i, getCard(j));
-        unocards.set(j, temp);
+        return getLabel() + ":" + unocards.toString();
     }
 
     /**Return UnoCard at specific index position 
@@ -115,15 +90,35 @@ public class UnoDeck {
     public UnoCard getCard(int i) {
         return unocards.get(i);
     }
-
-    /**Used in Constructor
-     * @param unocard: card to be added to deck
+    
+    /**
+     * Used in reshuffle of discardPile when discardPile becomes drawPile. These
+     * 'Piles' are UnoHands
+     * 
      */
-    public void addCard(UnoCard unocard) {
-        unocards.add(unocard);
+    @Override
+    public void shuffle() {
+        Random rand = new Random();
+        for (int i = size() - 1; i > 0; i--) {
+            int j = rand.nextInt(i);
+            swapCards(i, j);
+        }
+    }
+    
+    @Override
+    public void swapCards(int i, int j) {
+        Card temp = getCard(i);
+        unocards.set(i, getCard(j));
+        unocards.set(j, (UnoCard) temp);
+    }
+    
+    @Override
+    public void addCard(Card card) {
+        unocards.add((UnoCard) card);
     }
 
-    /**Used in dealAll(UnoHand) and many For Control Loops
+    /**Used in dealAll(UnoHand) and many 
+     * For Control Loops
      * @return size of unocards deck
      */
     public int size() {
@@ -135,7 +130,7 @@ public class UnoDeck {
         unoDeck1 = new UnoDeck("Uno Shuffle");
         for(UnoCard unocard:unoDeck1.unocards) {
             System.out.print(unocard +" ");
-            System.out.print(" " + UnoCard.scoreCardUno(unocard) + " ");
+//            System.out.print(" " + UnoCard.scoreCard(unocard) + " ");
             System.out.println(UnoSpecialCardsV2.unoCardDrawTwo(unocard));
             }
         System.out.println();
