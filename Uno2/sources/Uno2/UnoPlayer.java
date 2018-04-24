@@ -4,7 +4,7 @@ package Uno2;
 /**Class Player encapsulates player strategy for Uno,
  * While class Uno creates and maintains the state of the game.
  */
-
+import Uno2.UnoSpecialCardsV2;
 
 /**
  * @author MarcSherman
@@ -37,14 +37,6 @@ public class UnoPlayer {
     public UnoHand getHand() {
         return hand;
     }
-    
-//    public UnoCard play(Uno uno, UnoCard prev) {
-//        UnoCard unocard = searchForMatch(prev);
-//        if (unocard == null) {
-//            unocard = drawForMatch(uno, prev);
-//        }
-//        return unocard;  
-//    }
      
     public UnoCard play(UnoV2 uno, UnoCard prev) {
         UnoCard unocard = searchForMatch(prev);
@@ -64,19 +56,19 @@ public class UnoPlayer {
         
         if(UnoSpecialCardsV2.unoSpecialCard(prev)) {
             if(UnoSpecialCardsV2.unoCardWild(prev)) {
-                int unoCardTgtColor = UnoV2.getWildColor();
+                int unoCardTgtColor = UnoSpecialCardsV2.randomColor();
                 for (int i = hand.handSize()-1; i >=0; i--) {
                     UnoCard unocard = hand.getCard(i);
                     if (unocard.getColor() == unoCardTgtColor || 
-                            (unocard.getRank() > 24)) { 
-                        return hand.popCard(i);
+                            (UnoSpecialCardsV2.unoCardWild(unocard))) { 
+                        return (UnoCard) hand.popCard(i);
                     }
                 }
               return null;
               
             }
             if(UnoSpecialCardsV2.unoCardWildDrawFour(prev)) {
-                int unoCardTgtColor = UnoV2.getWildColor();
+                int unoCardTgtColor = UnoSpecialCardsV2.randomColor();
                 System.out.println("unoCardTgtColor into WD4 "
                         + "SearchForMatch " 
                         + UnoCard.getColors()[unoCardTgtColor]);
@@ -84,7 +76,7 @@ public class UnoPlayer {
                     UnoCard unocard = hand.getCard(i);
                     if ((unocard.getColor() == unoCardTgtColor) 
                             || unocard.getRank() > 24) {
-                        return hand.popCard(i); //had problem bug just because I forgot the 'i' in popCard...
+                        return (UnoCard) hand.popCard(i); //had problem bug just because I forgot the 'i' in popCard...
                     }
                 }
               return null;
@@ -96,13 +88,12 @@ public class UnoPlayer {
 /**      Runs thru hand looks for regular wild cards, plays 
  *            them first
  *            */
-            if (unocard.getRank() > 24 && unocard.getRank() < 29) { 
-                return hand.popCard(i);               
+            if (UnoSpecialCardsV2.unoCardWild(unocard)) { 
+                return (UnoCard) hand.popCard(i);               
 /**       Look for special cards, plays them next */
-            } else if((unocard.getRank() > 18 
-                    && unocard.getRank() < 25) && 
-                    UnoCard.unoCardsMatch(unocard, prev)) {
-                return hand.popCard(i);
+            } else if((UnoSpecialCardsV2.specialNotWild(unocard)) && 
+                    UnoCard.cardsMatch(unocard, prev)) {
+                return (UnoCard) hand.popCard(i);
             }
         }
 /**     After 'filters above, only cases are unocard < 19 
@@ -115,12 +106,12 @@ public class UnoPlayer {
             // search from end of hand as hand sorted ascending
                 UnoCard unocard = hand.getCard(i);
                 if (unocard.getRank() <= 19 
-                        && UnoCard.unoCardsMatch(unocard, prev)) 
+                        && UnoCard.cardsMatch(unocard, prev)) 
                 {
-                    return hand.popCard(i);
+                    return (UnoCard) hand.popCard(i);
                 }else if (unocard.getColor() > 3) { 
                     // all else fails, play DrawFour
-                   return hand.popCard(i);
+                   return (UnoCard) hand.popCard(i);
                 } 
         }
       return null;
@@ -130,7 +121,7 @@ public class UnoPlayer {
         while (true) {
             UnoCard unocard = uno.draw();
             System.out.println(name + " draws " + unocard);
-            if (UnoCard.unoCardsMatch(unocard, prev)) { 
+            if (UnoCard.cardsMatch(unocard, prev)) { 
                 return unocard;  
                 // "return statement gets u out of while(true) loop
             }

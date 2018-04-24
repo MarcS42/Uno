@@ -4,14 +4,14 @@ package Uno2;
 import java.util.Random;
 
 public class UnoSpecialCardsV2 {
-        private static boolean specialCard;
-        private static boolean skip;
-        private static boolean reverse;
-        private static boolean drawTwo;
-        private static boolean specialNotWildWD4;
-        private static boolean wildWD4;
-        private static boolean wild;
-        private static boolean wildDrawFour;
+        public static boolean specialCard;
+        public static boolean skip;
+        public static boolean reverse;
+        public static boolean drawTwo;
+        public static boolean specialNotWildWD4;
+        public static boolean wildWD4;
+        public static boolean wild;
+        public static boolean wildDrawFour;
         
         /**
          * SpecialCard true/false    

@@ -82,23 +82,22 @@ public class UnoCard extends Card {
      * @param card2 Prev. card you are trying to match
      * @return
      */
-    @Override
-    public boolean cardsMatch(Card unocard1, 
-            Card unocard2) { 
+    public static boolean cardsMatch(UnoCard unocard1, 
+            UnoCard unocard2) { 
      //unocard2 = PREV
         int unoCardTgtColor = 0;
       //Prev was wild and declared tgtColor
-        if (((UnoCard) unocard2).getRank() > 24) { 
-            unoCardTgtColor = UnoV2.getWildColor();
-            if (unoCardTgtColor == ((UnoCard)unocard1).color) {
+        if (UnoSpecialCardsV2.uCardWldorWD4(unocard2)) { 
+            unoCardTgtColor = UnoSpecialCardsV2.randomColor();
+            if (unoCardTgtColor == unocard1.color) {
                 return true; // > 24 => wild or wd4
                  }
         }
-        if (((UnoCard)unocard1).color > 3) {
+        if (unocard1.color > 3) {
             return true; 
-        } else if (((UnoCard)unocard2).color == ((UnoCard)unocard1).color || 
-                unoCardRankConversion((UnoCard) unocard2) == 
-                  unoCardRankConversion((UnoCard) unocard1)) {
+        } else if (unocard2.color == unocard1.color || 
+                unoCardRankConversion(unocard2) == 
+                  unoCardRankConversion(unocard1)) {
             return true;
             }
         return false;
@@ -111,13 +110,13 @@ public class UnoCard extends Card {
      * @param unocard2
      * @return +1, 0, -1
      */
-    public int compareCards(Card unocard1, 
-            Card unocard2) { 
-        if (unoCardRankConversion((UnoCard) unocard1) > 
-        unoCardRankConversion((UnoCard) unocard2)) {
+    public static int compareCards(UnoCard unocard1, 
+            UnoCard unocard2) { 
+        if (unoCardRankConversion( unocard1) > 
+        unoCardRankConversion(unocard2)) {
             return 1;
-        } else if (unoCardRankConversion((UnoCard) unocard1) == 
-                unoCardRankConversion((UnoCard) unocard2)) {
+        } else if (unoCardRankConversion(unocard1) == 
+                unoCardRankConversion(unocard2)) {
             return 0;
         }
         return -1;

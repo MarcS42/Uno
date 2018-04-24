@@ -56,7 +56,7 @@ public abstract class Card {
      * @param card2 Prev. card you are trying to match
      * @return
      */
-    public boolean cardsMatch(Card card1, 
+    public static boolean cardsMatch(Card card1, 
             Card card2) { 
         //card2 = previous card
         if (card2.getSuit() == card1.getSuit() &&
@@ -72,7 +72,7 @@ public abstract class Card {
      * @param card2
      * @return +1, 0, -1
      */
-    public int compareCards(Card card1, Card card2) { 
+    public static int compareCards(Card card1, Card card2) { 
       //Assumes Suit takes precedence over Rank
       //and Suit low to hi is clubs, diamonds, 
         //hearts, spades
