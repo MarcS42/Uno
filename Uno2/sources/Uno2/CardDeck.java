@@ -11,6 +11,10 @@ public abstract class CardDeck {
     public String getLabel() {
         return label;
     }
+    
+    public CardDeck() {
+        
+    }
 
     public CardDeck(String label) {
         this.label=label;
@@ -72,7 +76,7 @@ public abstract class CardDeck {
         cards.set(j, temp);
     }
 
-    private Card getCard(int i) {
+    public Card getCard(int i) {
         return cards.get(i);
     }
 

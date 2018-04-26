@@ -11,18 +11,22 @@ import java.util.ArrayList;
  * @author MarcSherman
  *
  */
-public class UnoHand extends CardDeck{
+public class UnoHand extends UnoDeck{
     private ArrayList<UnoCard> unohand;
     private String label;
     
+    public UnoHand() {
+        super();
+    }
+    
     public UnoHand(String label) {
-        this.label = label;
+        super(label);
         this.unohand = new ArrayList<UnoCard>();
     }
     
     public static UnoHand insertionSortUnoHand(UnoHand unohand) {
-        for (int i = 1; i < unohand.handSize(); i++) {
-            for(int k= i; (k>0 && (UnoCard.compareUnoCards
+        for (int i = 1; i < unohand.size(); i++) {
+            for(int k= i; (k>0 && (UnoCard.compareCards
              (unohand.getCard(k), unohand.getCard(k - 1)) < 1));
                     k--) {
                 unohand.swapCards(k,k-1);
@@ -34,11 +38,12 @@ public class UnoHand extends CardDeck{
     /**
      * Scoring system unique to Uno is in class UnoCard
      * */
-   public static int scoreHandUno(UnoHand unohand) {
+   public int scoreHandUno(UnoHand unohand) {
+       UnoCard uC = new UnoCard();
            int sum = 0;
-           for(int i = 0; i < unohand.handSize(); i++) {
+           for(int i = 0; i < unohand.size(); i++) {
                UnoCard unocard = unohand.getCard(i);
-               sum += UnoCard.scoreCard(unocard);
+               sum += uC.scoreCard(unocard);
            }
            return sum;     
        }
@@ -48,7 +53,7 @@ public class UnoHand extends CardDeck{
  */
 public void display() {
        System.out.println(getLabel() + ": ");
-       for (int i =0; i < handSize(); i++) {
+       for (int i =0; i < size(); i++) {
            System.out.println(getCard(i));
 //           System.out.println(" " + UnoCard.scoreCardUno(getCard(i)));
        }
@@ -62,20 +67,20 @@ public void display() {
        return unohand.isEmpty();
    }
 
-   /*moves all remaining cards to the given CardCollection*/
-   public void dealAll(UnoHand that) {
-       int n = handSize();
-       deal(that, n);
-   }
+//   /*moves all remaining cards to the given CardCollection*/
+//   public void dealAll(UnoHand that) {
+//       int n = handSize();
+//       deal(that, n);
+//   }
    
-   /* Deal(that,n) Removes n cards from this.CardCollection, and
-    *  adds n cards to that.CardCollection*/
-   public void deal(UnoHand that, int n) {
-       for (int i=0; i < n; i++) {
-           UnoCard card = popCard();
-           that.addCard(card);
-       }
-   }
+//   /* Deal(that,n) Removes n cards from this.CardCollection, and
+//    *  adds n cards to that.CardCollection*/
+//   public void deal(UnoHand that, int n) {
+//       for (int i=0; i < n; i++) {
+//           UnoCard card = (UnoCard) popCard();
+//           that.addCard(card);
+//       }
+//   }
    
    
    
@@ -92,14 +97,14 @@ public String getLabel() {
     return label;
 }
 
-/**Used in many methods in UnoPlayer, UnoHand, and 
- * UnoV2
- * @param i int index position of desired card in AL
- * @return Card at index posit. i in UnoHand
- */
-public UnoCard getCard(int i) {
-    return unohand.get(i);
-}
+///**Used in many methods in UnoPlayer, UnoHand, and 
+// * UnoV2
+// * @param i int index position of desired card in AL
+// * @return Card at index posit. i in UnoHand
+// */
+//public UnoCard getCard(int i) {
+//    return unohand.get(i);
+//}
 
 /*Used in UnoV2 takeTurn()
  * gets last card from calling CardCollection, 
@@ -107,110 +112,8 @@ public UnoCard getCard(int i) {
     * So it is like taking a look at the card
     * */
    public UnoCard last() {
-       int i = handSize()-1;
+       int i = size()-1;
        return getCard(i);
    }
-
-/**Utility used wherever you need For control loop
- * @return
- */
-public int handSize() {
-    return unohand.size();
-}
-
-/**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-//        UnoDeck deck = new UnoDeck("UnoHand Test");
-//
-//        for (UnoCard unocard : deck.getUnoCards()) {
-//            System.out.print(unocard + " ");
-//            System.out.println(UnoSpecialCardsV2.unoCardWildDrawFour(unocard));
-//        }
-//        System.out.println();
-//        deck.shuffle();
-//
-//        for (UnoCard unocard : deck.getUnoCards()) {
-//            System.out.print(unocard + " ");
-//            System.out.println(UnoSpecialCardsV2.unoCardWildDrawFour(unocard));
-//        }
-//        System.out.println("");
-//        
-//        UnoHand player1;
-//        player1 = new UnoHand("Testhand1");
-//        if(player1.empty())System.out.println("empty hand 1");
-//        System.out.println("");
-//        
-//        deck.deal(player1, 7);
-//        player1.display();
-//        System.out.println(scoreHandUno(player1));
-//        
-//        UnoHand player2;
-//        player2 = new UnoHand("TestHand2");
-//        if(player2.empty())System.out.println("empty hand2");
-//        System.out.println("");
-//        
-//        deck.deal(player2, 7);
-//        UnoHand.insertionSortUnoHand(player2);
-//        player2.display();
-//        System.out.println(scoreHandUno(player2));
-//        
-//        UnoHand player3;
-//        player3 = new UnoHand("Testhand3");
-//        if(player3.empty())System.out.println("empty hand 3");
-//        System.out.println("");
-//        
-//        deck.deal(player3, 7);
-//        UnoHand.insertionSortUnoHand(player3);
-//        System.out.println(scoreHandUno(player3));
-//        player3.display();
-//        
-//        
-//        UnoHand discardpile;
-//        discardpile = new UnoHand("Discard Pile");
-//        if(discardpile.empty())
-//            System.out.println("Empty discard pile");
-//        System.out.println("");
-//        
-//        deck.deal(discardpile, 1);
-//        discardpile.display();
-//        System.out.println("");
-//        
-//        UnoHand drawpile;
-//        drawpile= new UnoHand("Draw Pile");
-//        if(drawpile.empty())
-//            System.out.println("Empty draw pile");
-//        System.out.println("");
-//        
-//        deck.dealAll(drawpile);
-//        System.out.println("Draw Pile size: " + drawpile.handSize());
-//        System.out.println("");
-       
-        for(int indexP=0;indexP < 3; indexP++) {
-            int indexNextPlayer;
-            int indexIncrement=2;
-            int playersSize=3;
-//            if (skip) {
-//                indexIncrement = 2;
-//            } else {
-//                indexIncrement = 1;
-//            }
-//            if (clockwise) {
-//                indexNextPlayer = (players.indexOf(current) + indexIncrement) % players.size();
-//            } else {
-                indexNextPlayer = (indexP - indexIncrement) % playersSize;
-                if (indexNextPlayer < 0 && indexP==1) {// need to fix this when 3 players, counter clockwise, and skip on currentplayer 1
-                        indexNextPlayer = playersSize - indexIncrement +1;// 1-2=-1 => <0 =>3-2 = 1 again
-                }else if(indexNextPlayer <0) {
-                    indexNextPlayer = playersSize-indexIncrement;
-                }
-                System.out.println(indexP + " "+ indexNextPlayer);
-            }
-            
-        }
-
-
-}
+}//End class UnoHand 
 

@@ -6,6 +6,14 @@ import java.util.Random;
 public class UnoDeck extends CardDeck {
     private ArrayList<UnoCard> unocards;
     
+    public ArrayList<UnoCard> getUnocards() {
+        return unocards;
+    }
+
+    public UnoDeck() {
+        
+    }
+    
     /**
      * Constructor - UnoDeck with wild cards
      * Initializes ArrayList<UnoCard> unocards 
@@ -107,9 +115,9 @@ public class UnoDeck extends CardDeck {
     
     @Override
     public void swapCards(int i, int j) {
-        Card temp = getCard(i);
+        UnoCard temp = getCard(i);
         unocards.set(i, getCard(j));
-        unocards.set(j, (UnoCard) temp);
+        unocards.set(j, temp);
     }
     
     @Override
@@ -124,24 +132,5 @@ public class UnoDeck extends CardDeck {
     public int size() {
         return unocards.size();
     }
-
-    public static void main(String[] args) {
-        UnoDeck unoDeck1;
-        unoDeck1 = new UnoDeck("Uno Shuffle");
-        for(UnoCard unocard:unoDeck1.unocards) {
-            System.out.print(unocard +" ");
-//            System.out.print(" " + UnoCard.scoreCard(unocard) + " ");
-            System.out.println(UnoSpecialCardsV2.unoCardDrawTwo(unocard));
-            }
-        System.out.println();
-        unoDeck1.shuffle();
-
-        for(int i=0; i < unoDeck1.unocards.size(); i++) {
-            System.out.print(unoDeck1.unocards.get(i) + " ");
-            System.out.println(UnoSpecialCardsV2.unoCardDrawTwo(unoDeck1.unocards.get(i)));
-        }
-    System.out.println(unoDeck1.size());
-    }
-
 }
 

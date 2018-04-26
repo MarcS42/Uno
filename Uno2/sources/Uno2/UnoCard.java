@@ -34,8 +34,6 @@ public class UnoCard extends Card {
         private final int color; // 'final' keeps guys from messing with these and
         private final int rank; // can only assign values within a constructor
 
-    
-
     public UnoCard() { // zero-args Constructor
         this.color=0;
         this.rank=0;
@@ -46,6 +44,7 @@ public class UnoCard extends Card {
      // 27 ranks (0 plus 2 of each other card including 
     //   skip, reverse, drawTwo, wild, wildDraw4)
         this.rank = rank; 
+        
     }
     
     public int getColor() {
@@ -87,8 +86,9 @@ public class UnoCard extends Card {
      //unocard2 = PREV
         int unoCardTgtColor = 0;
       //Prev was wild and declared tgtColor
-        if (UnoSpecialCardsV2.uCardWldorWD4(unocard2)) { 
-            unoCardTgtColor = UnoSpecialCardsV2.randomColor();
+        UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
+        if (spC.uCardWldorWD4(unocard2)) { 
+            unoCardTgtColor = spC.randomColor();
             if (unoCardTgtColor == unocard1.color) {
                 return true; // > 24 => wild or wd4
                  }
@@ -129,12 +129,13 @@ public class UnoCard extends Card {
      * @return
      */
     public int scoreCard(Card unocard) { 
+        UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
         int cardScore = 0;
-        if (UnoSpecialCardsV2.uCardWldorWD4((UnoCard) unocard)) {
+        if (spC.uCardWldorWD4((UnoCard) unocard)) {
             cardScore = -50;
         }
         int rank = ((UnoCard) unocard).getRank();
-        if (UnoSpecialCardsV2.specialNotWild((UnoCard) unocard)) {
+        if (spC.specialNotWild((UnoCard) unocard)) {
             cardScore = -20;
         } else if (rank < 20) {
             if (rank % 2 == 0) {
@@ -167,9 +168,6 @@ public class UnoCard extends Card {
         return value;
     }
     
-    public static void main(String[] args) {
-
-    }
 
 }// End class UnoCard
 

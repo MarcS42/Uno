@@ -18,6 +18,8 @@ public class UnoV2 {
     private static boolean skip;
     private boolean firstPass;
     private static int wildColor;
+    UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
+    UnoHand uH = new UnoHand();
     
     /**
      * Constructor of Uno
@@ -124,7 +126,7 @@ public class UnoV2 {
         
         discardPile.display();
         System.out.println("Draw Pile:");
-        System.out.println(drawPile.handSize() + " cards");
+        System.out.println(drawPile.size() + " cards");
         System.out.println("");
     } // End displayState()
     
@@ -148,7 +150,7 @@ public class UnoV2 {
      */
     public void reshuffle() {
 //    remove top card from discard pile
-        UnoCard prev = discardPile.popCard(); 
+        UnoCard prev = (UnoCard) discardPile.popCard(); 
 //    transfer remaining discard pile to new draw pile
         discardPile.dealAll(drawPile);
 //    shuffle new draw pile        
@@ -165,7 +167,7 @@ public class UnoV2 {
         if (drawPile.empty()) {
             reshuffle();
         }
-        return drawPile.popCard();
+        return (UnoCard) drawPile.popCard();
     }
     
     /**
@@ -182,13 +184,13 @@ public class UnoV2 {
             int counter = 0;
             do {
                 if (counter == 0)
-                    i = player.getHand().handSize() - 1;
+                    i = player.getHand().size() - 1;
                 UnoCard next = player.getHand().getCard(i);
-                if (UnoSpecialCardsV2.unoCardWildDrawFour(next)) { // check to see if he has D2
+                if (spC.unoCardWildDrawFour(next)) { // check to see if he has D2
                     wd4MatchCheck = true;
                     wd4CardsPlayed++;
                     System.out.println(player.getName() + " plays " + next);
-                    next = player.getHand().popCard(i);
+                    next = (UnoCard) player.getHand().popCard(i);
                     discardPile.addCard(next);
                     player = nextPlayer(player);
                     displayState();
@@ -250,13 +252,13 @@ public class UnoV2 {
         int counter = 0;
         do {
             if (counter == 0)
-                i = player.getHand().handSize() - 1;
+                i = player.getHand().size() - 1;
             UnoCard next = player.getHand().getCard(i);
-            if (UnoSpecialCardsV2.unoCardDrawTwo(next)) { // check to see if he has D2
+            if (spC.unoCardDrawTwo(next)) { // check to see if he has D2
                 d2MatchCheck = true;
                 d2CardsPlayed++;
                 System.out.println(player.getName() + " plays " + next);
-                next = player.getHand().popCard(i);
+                next = (UnoCard) player.getHand().popCard(i);
                 discardPile.addCard(next);
                 player = nextPlayer(player);
                 displayState();
@@ -303,7 +305,7 @@ public class UnoV2 {
      * @return int color
      */
     public int unoWildCardColor() {
-        int color = UnoSpecialCardsV2.randomColor();
+        int color = spC.randomColor();
         return color;
     }
     
@@ -320,12 +322,12 @@ public class UnoV2 {
          * Start firstPass && Special
          */
         if (firstPass && 
-                UnoSpecialCardsV2.unoSpecialCard(prev)) {
+                spC.unoSpecialCard(prev)) {
             firstPass = false;
-            if (UnoSpecialCardsV2.unoCardSkip(prev)) {
+            if (spC.unoCardSkip(prev)) {
                 player = players.get(players.indexOf(player)+2);
             }
-            if (UnoSpecialCardsV2.unoCardReverse(prev)) {
+            if (spC.unoCardReverse(prev)) {
                 UnoV2.toggleDirectionOfPlay();
                 player = players.get(players.size()-1);
             }
@@ -334,8 +336,8 @@ public class UnoV2 {
         /**
          * Start actions for previous card = Special
          */
-        if(UnoSpecialCardsV2.unoSpecialCard(prev)) {
-            if (UnoSpecialCardsV2.unoCardDrawTwo(prev)) {
+        if(spC.unoSpecialCard(prev)) {
+            if (spC.unoCardDrawTwo(prev)) {
                 
                 int d2CardsPlayed = 1;
                 drawTwo(player, d2CardsPlayed);
@@ -343,7 +345,7 @@ public class UnoV2 {
                 player = nextPlayer(player);
             }
                         
-            if (UnoSpecialCardsV2.unoCardWildDrawFour(prev)) {
+            if (spC.unoCardWildDrawFour(prev)) {
                 
                 int wd4CardsPlayed = 1;
                 drawWildDrawFour(player, wd4CardsPlayed);
@@ -361,22 +363,22 @@ public class UnoV2 {
         /**
          * Actions needed when NEXT card is special card
          */
-        if (UnoSpecialCardsV2.unoSpecialCard(next)) {
-            if (UnoSpecialCardsV2.unoCardSkip(next)) {
+        if (spC.unoSpecialCard(next)) {
+            if (spC.unoCardSkip(next)) {
                 skip = true;
                 discardPile.addCard(next);
                 System.out.println(player.getName() + " plays " + next);
                 System.out.println();
                 player = nextPlayer(player);
             }
-            if (UnoSpecialCardsV2.unoCardReverse(next)) {
+            if (spC.unoCardReverse(next)) {
                 UnoV2.toggleDirectionOfPlay();
                 discardPile.addCard(next);
                 System.out.println(player.getName() + " plays " + next);
                 System.out.println();
                 player = nextPlayer(player);
             }
-            if(UnoSpecialCardsV2.unoCardWild(next)) {
+            if(spC.unoCardWild(next)) {
                 wildColor=unoWildCardColor();
                 discardPile.addCard(next);
                 System.out.println(player.getName() + " plays " + next + 
@@ -384,7 +386,7 @@ public class UnoV2 {
                 System.out.println(); 
                 player = nextPlayer(player);
             }
-            if(UnoSpecialCardsV2.unoCardWildDrawFour(next)) {
+            if(spC.unoCardWildDrawFour(next)) {
                 wildColor=unoWildCardColor();
                 discardPile.addCard(next);
                 System.out.println(player.getName() + " plays " + next + 
@@ -392,7 +394,7 @@ public class UnoV2 {
                 System.out.println();
                 player = nextPlayer(player);
             }
-            if (UnoSpecialCardsV2.unoCardDrawTwo(next)) {
+            if (spC.unoCardDrawTwo(next)) {
                 discardPile.addCard(next);
                 System.out.println(player.getName() + " plays " + next);
                 System.out.println();
@@ -401,7 +403,7 @@ public class UnoV2 {
 
         }//End special card next
         
-        if (!UnoSpecialCardsV2.unoSpecialCard(next)) {
+        if (!spC.unoSpecialCard(next)) {
             discardPile.addCard(next);
             System.out.println(player.getName() + " plays " + next);
             System.out.println();
@@ -422,7 +424,7 @@ public class UnoV2 {
 //      Display final score.
         System.out.println("Final Scores:");
         for (int i= 0; i <players.size(); i++) {
-        System.out.println(players.get(i).getName() + " scores " + UnoHand.scoreHandUno(players.get(i).getHand()));
+        System.out.println(players.get(i).getName() + " scores " + uH.scoreHandUno(players.get(i).getHand()));
         }
     }
     

@@ -4,7 +4,6 @@ package Uno2;
 /**Class Player encapsulates player strategy for Uno,
  * While class Uno creates and maintains the state of the game.
  */
-import Uno2.UnoSpecialCardsV2;
 
 /**
  * @author MarcSherman
@@ -53,26 +52,26 @@ public class UnoPlayer {
      * @return match from hand
      */
     public UnoCard searchForMatch(UnoCard prev) {
-        
-        if(UnoSpecialCardsV2.unoSpecialCard(prev)) {
-            if(UnoSpecialCardsV2.unoCardWild(prev)) {
-                int unoCardTgtColor = UnoSpecialCardsV2.randomColor();
-                for (int i = hand.handSize()-1; i >=0; i--) {
+        UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
+        if(spC.unoSpecialCard(prev)) {
+            if(spC.unoCardWild(prev)) {
+                int unoCardTgtColor = spC.randomColor();
+                for (int i = hand.size()-1; i >=0; i--) {
                     UnoCard unocard = hand.getCard(i);
                     if (unocard.getColor() == unoCardTgtColor || 
-                            (UnoSpecialCardsV2.unoCardWild(unocard))) { 
+                            (spC.unoCardWild(unocard))) { 
                         return (UnoCard) hand.popCard(i);
                     }
                 }
               return null;
               
             }
-            if(UnoSpecialCardsV2.unoCardWildDrawFour(prev)) {
-                int unoCardTgtColor = UnoSpecialCardsV2.randomColor();
+            if(spC.unoCardWildDrawFour(prev)) {
+                int unoCardTgtColor = spC.randomColor();
                 System.out.println("unoCardTgtColor into WD4 "
                         + "SearchForMatch " 
                         + UnoCard.getColors()[unoCardTgtColor]);
-                for (int i = hand.handSize()-1; i >=0;i--) {
+                for (int i = hand.size()-1; i >=0;i--) {
                     UnoCard unocard = hand.getCard(i);
                     if ((unocard.getColor() == unoCardTgtColor) 
                             || unocard.getRank() > 24) {
@@ -83,15 +82,15 @@ public class UnoPlayer {
             }            
         } //end special card prev search for match
         
-        for (int i = 0; i < hand.handSize(); i++) {
+        for (int i = 0; i < hand.size(); i++) {
             UnoCard unocard = hand.getCard(i);
 /**      Runs thru hand looks for regular wild cards, plays 
  *            them first
  *            */
-            if (UnoSpecialCardsV2.unoCardWild(unocard)) { 
+            if (spC.unoCardWild(unocard)) { 
                 return (UnoCard) hand.popCard(i);               
 /**       Look for special cards, plays them next */
-            } else if((UnoSpecialCardsV2.specialNotWild(unocard)) && 
+            } else if((spC.specialNotWild(unocard)) && 
                     UnoCard.cardsMatch(unocard, prev)) {
                 return (UnoCard) hand.popCard(i);
             }
@@ -102,7 +101,7 @@ public class UnoPlayer {
         regular wild cards to play highest first */                
       UnoHand.insertionSortUnoHand(hand);    
       
-        for (int i = hand.handSize() - 1; i >= 0; i--) { 
+        for (int i = hand.size() - 1; i >= 0; i--) { 
             // search from end of hand as hand sorted ascending
                 UnoCard unocard = hand.getCard(i);
                 if (unocard.getRank() <= 19 
