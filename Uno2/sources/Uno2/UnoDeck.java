@@ -4,14 +4,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class UnoDeck extends CardDeck {
-    private ArrayList<UnoCard> unocards;
+    protected ArrayList<UnoCard> unocards;
+    protected String label;
     
     public ArrayList<UnoCard> getUnocards() {
         return unocards;
     }
-
-    public UnoDeck() {
-        
+    
+   @Override
+    public String getLabel() {
+        return label;
+    }
+    
+    /**Constructor used for UnoHand
+     * @param label
+     * @param unocards
+     */
+    public UnoDeck(String label, ArrayList<UnoCard> unocards) {
+        this.label = label;
+        this.unocards = unocards;
     }
     
     /**
@@ -24,8 +35,8 @@ public class UnoDeck extends CardDeck {
      * @param label
      */
     public UnoDeck(String label) {
-        super(label);
-        this.unocards = new ArrayList<UnoCard>();
+        this.label = label;
+        unocards = new ArrayList<UnoCard>();
 
         cardDeckBuilder(24, 3);
         
@@ -57,7 +68,7 @@ public class UnoDeck extends CardDeck {
      *  */
     public void deal(UnoHand that, int n) {
         for (int i=0; i < n; i++) {
-            UnoCard unocard = (UnoCard) popCard();
+            UnoCard unocard = popCard();
             that.addCard(unocard);
         }
     }
@@ -120,17 +131,57 @@ public class UnoDeck extends CardDeck {
         unocards.set(j, temp);
     }
     
-    @Override
-    public void addCard(Card card) {
-        unocards.add((UnoCard) card);
+    public void addCard(UnoCard card) {
+        unocards.add(card);
+    }
+    
+    /**
+     * Checks if unocards AL is empty
+     * 
+     * @return true if hand is empty
+     */
+    public boolean empty() {
+        return getUnocards().isEmpty();
     }
 
+    /**Removes AL unoCard[i], and shifts all cards 
+     * above it to the left
+     * 
+     * Used in UnoV2 and UnoPlayer
+     * 
+     * @param i int of tgt card in ArrayList
+     * @return card removed from specific index posit.
+     */
+ public UnoCard popCard(int i) { 
+        return unocards.remove(i);
+    }
+    
+    /**Used in draw, deal(Hand, int), and 
+     *      UnoV2 Constructor.
+     * "Overloaded" 
+     * Removes top card, no need to shift left
+     * @return top/last card
+     */
+    public UnoCard popCard() { 
+           int i = size() - 1;
+           return unocards.remove(i);
+       }
+    
     /**Used in dealAll(UnoHand) and many 
      * For Control Loops
      * @return size of unocards deck
      */
     public int size() {
         return unocards.size();
+    }
+    
+    /*
+     * Used in UnoV2 takeTurn() gets last card from calling CardCollection, but
+     * doesn't remove it So it is like taking a look at the card
+     */
+    public UnoCard last() {
+        int i = size() - 1;
+        return getCard(i);
     }
 }
 

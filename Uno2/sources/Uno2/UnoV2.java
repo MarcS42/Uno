@@ -19,7 +19,6 @@ public class UnoV2 {
     private boolean firstPass;
     private static int wildColor;
     UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
-    UnoHand uH = new UnoHand();
     
     /**
      * Constructor of Uno
@@ -56,7 +55,8 @@ public class UnoV2 {
             players.add(newPlayer);
         }
         
-        discardPile = new UnoHand("Discards");
+        ArrayList<UnoCard> dPile = new ArrayList<>();
+        discardPile = new UnoHand("Discards", dPile);
         deck.deal(discardPile, 1);
 //     1st card cannot be wild
         while (discardPile.getCard(0).getColor()>3){
@@ -72,7 +72,8 @@ public class UnoV2 {
         firstPass = true;
         wildColor=4;
         
-        drawPile = new UnoHand("Draw Pile");
+        ArrayList<UnoCard> drPile = new ArrayList<>();
+        drawPile = new UnoHand("Draw Pile", drPile);
         deck.dealAll(drawPile);
     }//End constructor
     
@@ -150,7 +151,7 @@ public class UnoV2 {
      */
     public void reshuffle() {
 //    remove top card from discard pile
-        UnoCard prev = (UnoCard) discardPile.popCard(); 
+        UnoCard prev = discardPile.popCard(); 
 //    transfer remaining discard pile to new draw pile
         discardPile.dealAll(drawPile);
 //    shuffle new draw pile        
@@ -167,7 +168,7 @@ public class UnoV2 {
         if (drawPile.empty()) {
             reshuffle();
         }
-        return (UnoCard) drawPile.popCard();
+        return drawPile.popCard();
     }
     
     /**
@@ -424,7 +425,7 @@ public class UnoV2 {
 //      Display final score.
         System.out.println("Final Scores:");
         for (int i= 0; i <players.size(); i++) {
-        System.out.println(players.get(i).getName() + " scores " + uH.scoreHandUno(players.get(i).getHand()));
+        System.out.println(players.get(i).getName() + " scores " + UnoHand.scoreHandUno(players.get(i).getHand()));
         }
     }
     
@@ -471,8 +472,8 @@ public class UnoV2 {
     }
 
     public static void main(String[] args) {
-//        UnoV2 game = new UnoV2();
-//        game.playGame();
+        UnoV2 game = new UnoV2();
+        game.playGame();
 
     }
 

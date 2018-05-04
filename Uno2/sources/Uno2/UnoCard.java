@@ -66,7 +66,7 @@ public class UnoCard extends Card {
 * (becuz toString() overrides built-in toString)   
 */    
     public static void printCard(UnoCard unocard) {
-        System.out.println(unocard);
+        System.out.printf("%-16s%n", unocard);
     }
     
     @Override
@@ -128,7 +128,7 @@ public class UnoCard extends Card {
      * @param unocard
      * @return
      */
-    public int scoreCard(Card unocard) { 
+    public static int scoreCard(Card unocard) { 
         UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
         int cardScore = 0;
         if (spC.uCardWldorWD4((UnoCard) unocard)) {

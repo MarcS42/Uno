@@ -1,6 +1,6 @@
 package Uno2;
 
-public abstract class Card {
+public class Card {
 
     private static final String[] RANKS = 
         {"Ace","2","3","4","5",
@@ -95,7 +95,12 @@ public abstract class Card {
      * @param card
      * @return
      */
-    public abstract int scoreCard(Card card); 
+    public static int scoreCard(Card card) {
+        int cardScore;
+        if(card.getRank()>10 ) return cardScore = 10;
+        cardScore = card.getRank();
+        return cardScore;
+    } 
 
     @Override
     public String toString() {

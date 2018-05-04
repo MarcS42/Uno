@@ -11,18 +11,18 @@ public abstract class CardDeck {
     public String getLabel() {
         return label;
     }
-    
-    public CardDeck() {
-        
-    }
 
+    public CardDeck() {
+    }
+    
     public CardDeck(String label) {
         this.label=label;
         this.cards = new ArrayList<Card>();
         
+//      CardDeck Builder....  
         for(int suit = 0; suit < 4; suit++ ) {
             for(int rank = 0; rank < 13; rank++) {
-//                addCard(new Card(rank, suit));
+                addCard(new Card(rank, suit));
             }
         }
     }
@@ -45,7 +45,7 @@ public abstract class CardDeck {
     /**Removes AL card[i], and shifts all cards 
         * above it to the left
         * 
-        * Used in UnoV2 and UnoPlayer
+        * 
         * 
         * @param i int of tgt card in ArrayList
         * @return card removed from specific index posit.
@@ -82,7 +82,7 @@ public abstract class CardDeck {
 
     /**Helper/Utility method.
         * Used in many methods
-     * @param card card to be added to end of unohand AL
+     * @param card card to be added to end of hand AL
      */
     public void addCard(Card card) {
            cards.add(card);
