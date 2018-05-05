@@ -106,6 +106,7 @@ public class UnoDeck extends CardDeck {
      * @param i AL integer position of desired card
      * @return UnoCard at position i in AL unocards [the deck]
      */
+    @Override
     public UnoCard getCard(int i) {
         return unocards.get(i);
     }
@@ -152,6 +153,7 @@ public class UnoDeck extends CardDeck {
      * @param i int of tgt card in ArrayList
      * @return card removed from specific index posit.
      */
+    @Override
  public UnoCard popCard(int i) { 
         return unocards.remove(i);
     }
@@ -162,6 +164,7 @@ public class UnoDeck extends CardDeck {
      * Removes top card, no need to shift left
      * @return top/last card
      */
+ @Override
     public UnoCard popCard() { 
            int i = size() - 1;
            return unocards.remove(i);
@@ -171,6 +174,7 @@ public class UnoDeck extends CardDeck {
      * For Control Loops
      * @return size of unocards deck
      */
+    @Override
     public int size() {
         return unocards.size();
     }
