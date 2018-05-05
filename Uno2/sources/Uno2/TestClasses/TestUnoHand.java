@@ -1,6 +1,11 @@
-package Uno2;
+package Uno2.TestClasses;
 
 import java.util.ArrayList;
+
+import Uno2.UnoCard;
+import Uno2.UnoDeck;
+import Uno2.UnoHand;
+import Uno2.UnoSpecialCardsV2;
 
 public class TestUnoHand {
     UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
