@@ -25,7 +25,7 @@ public class UnoDeck extends CardDeck {
         this.unocards = unocards;
     }
     
-    /**
+    /**Full UnoDeck Constructor for 103 card UnoDeck
      * Constructor - UnoDeck with wild cards
      * Initializes ArrayList<UnoCard> unocards 
      * deck

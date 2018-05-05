@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class UnoHand extends UnoDeck {
 
     /**Constructor generates a UnoHand
+     * Actual constructor is in Parent Class
      * @param pileLabels
      * @param piles
      */
