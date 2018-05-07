@@ -51,7 +51,7 @@ public class UnoHand extends UnoDeck {
     public void display() {
         System.out.println(label + ": ");
         for (int i=0; i < unocards.size(); i++) {
-            System.out.print(unocards.get(i));
+            System.out.printf("%-15s", unocards.get(i));
             System.out.println(" " + UnoCard.scoreCard(getCard(i)));
         }
         System.out.println();

@@ -125,7 +125,12 @@ public class UnoV2 {
             player.getHand().display();
         }
         
-        discardPile.display();
+        int dPSize = discardPile.size();
+        if(dPSize > 15) {
+            for(int i= dPSize - 15; i < dPSize-1; i++) {
+                UnoCard.printCard(discardPile.getCard(i));
+            }
+        }else {discardPile.display();}
         System.out.println("Draw Pile:");
         System.out.println(drawPile.size() + " cards");
         System.out.println("");
@@ -296,7 +301,7 @@ public class UnoV2 {
         } 
      }while (d2CardsPlayed >= 1); 
   /** This return never gets hit, but if you pull it, get problems with
-   *  drawTurn() bug detection looking for return statement
+   *  drawTwo() bug detection looking for return statement
    */
      return player; 
     }//End drawTwo()
@@ -367,51 +372,57 @@ public class UnoV2 {
         if (spC.unoSpecialCard(next)) {
             if (spC.unoCardSkip(next)) {
                 skip = true;
-                discardPile.addCard(next);
-                System.out.println(player.getName() + " plays " + next);
-                System.out.println();
-                player = nextPlayer(player);
+                playerPlaysNext(next);
             }
             if (spC.unoCardReverse(next)) {
                 UnoV2.toggleDirectionOfPlay();
-                discardPile.addCard(next);
-                System.out.println(player.getName() + " plays " + next);
-                System.out.println();
-                player = nextPlayer(player);
+                playerPlaysNext(next);
             }
+            
             if(spC.unoCardWild(next)) {
                 wildColor=unoWildCardColor();
-                discardPile.addCard(next);
-                System.out.println(player.getName() + " plays " + next + 
-                        " Match "+ UnoCard.getColors()[wildColor]);
-                System.out.println(); 
-                player = nextPlayer(player);
+                playerPlaysWldNext(next);
             }
+            
             if(spC.unoCardWildDrawFour(next)) {
                 wildColor=unoWildCardColor();
-                discardPile.addCard(next);
-                System.out.println(player.getName() + " plays " + next + 
-                        " Match "+ UnoCard.getColors()[wildColor]);
-                System.out.println();
-                player = nextPlayer(player);
+                playerPlaysWldNext(next);
             }
+            
             if (spC.unoCardDrawTwo(next)) {
-                discardPile.addCard(next);
-                System.out.println(player.getName() + " plays " + next);
-                System.out.println();
-                player = nextPlayer(player);
+                playerPlaysNext(next);
             }
 
         }//End special card next
         
         if (!spC.unoSpecialCard(next)) {
-            discardPile.addCard(next);
-            System.out.println(player.getName() + " plays " + next);
-            System.out.println();
-            player = nextPlayer(player);            
+            playerPlaysNext(next);            
         }
 
     } //End takeTurn(UnoPlayer)
+
+    /**
+     * @param next = When Next card played is wild/WD4, need to
+     * choose a color to Match.
+     */
+    private void playerPlaysWldNext(UnoCard next) {
+        discardPile.addCard(next);
+        System.out.println(player.getName() + " plays " + next + 
+                " Match "+ UnoCard.getColors()[wildColor]);
+        System.out.println(); 
+        player = nextPlayer(player);
+    }
+
+    /**
+     * @param next = UnoCard play card sequence when next not wild
+     * private restricts method access to UnoV2 class
+     */
+    private void playerPlaysNext(UnoCard next) {
+        discardPile.addCard(next);
+        System.out.println(player.getName() + " plays " + next);
+        System.out.println();
+        player = nextPlayer(player);
+    }
     
     public void playGame() {
         
