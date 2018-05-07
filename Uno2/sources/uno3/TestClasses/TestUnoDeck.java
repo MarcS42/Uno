@@ -1,8 +1,8 @@
-package Uno2.TestClasses;
+package uno3.TestClasses;
 
-import Uno2.UnoCard;
-import Uno2.UnoDeck;
-import Uno2.UnoSpecialCardsV2;
+import uno3.UnoCard;
+import uno3.UnoDeck;
+import uno3.UnoSpecialCardsV2;
 
 public class TestUnoDeck {
     

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package Uno2.TestClasses;
+package uno3.TestClasses;
 
-import Uno2.UnoCard;
+import uno3.UnoCard;
 
 /**
  * @author MarcSherman

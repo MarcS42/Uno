@@ -1,4 +1,4 @@
-package Uno2;
+package uno3;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -52,7 +52,7 @@ public class UnoDeck extends CardDeck {
     /**Trying to cleanup constructor
      * abstract in CardDeck because Card is abstract
      * and therefor cannot be instantiated
-     * @see Uno2.CardDeck#cardDeckBuilder(int, int)
+     * @see uno3.CardDeck#cardDeckBuilder(int, int)
      */
     protected void cardDeckBuilder(int rankMax, int colorMax) {
         for (int color = 0; color <= colorMax; color++) {
