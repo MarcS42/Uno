@@ -29,7 +29,7 @@ public class TestUnoHand {
         UnoHand player1;
         ArrayList<UnoCard> ALPlayer1 = new ArrayList<UnoCard>(); 
         player1 = new UnoHand("P1",ALPlayer1);
-        System.out.println(player1.label);
+        System.out.println(player1.getLabel());
         if (player1.empty())
             System.out.println("empty hand 1");
         System.out.println("");
@@ -42,7 +42,7 @@ public class TestUnoHand {
         UnoHand player2;
         ArrayList<UnoCard> ALPlayer2 = new ArrayList<UnoCard>();
         player2 = new UnoHand("P2", ALPlayer2);
-        System.out.println(player2.label);
+        System.out.println(player2.getLabel());
         if (player2.empty())
             System.out.println("empty hand 2");
         System.out.println("");
@@ -55,7 +55,7 @@ public class TestUnoHand {
         UnoHand player3;
         ArrayList<UnoCard> ALPlayer3 = new ArrayList<UnoCard>();
         player3 = new UnoHand("P3", ALPlayer3);
-        System.out.println(player3.label);
+        System.out.println(player3.getLabel());
         if (player3.empty())
             System.out.println("empty hand 3");
         System.out.println("");
