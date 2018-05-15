@@ -61,9 +61,12 @@ public class UnoPlayer {
      */
     public UnoCard searchForMatch(UnoCard prev) {
         UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
-        if(spC.unoSpecialCard(prev)) {
+        
+        if(spC.uCardWldorWD4(prev)) {
+            
+            //Is Card to Match wild?
             if(spC.unoCardWild(prev)) {
-                int unoCardTgtColor = spC.randomColor();
+                int unoCardTgtColor = UnoV2.getWildColor();
                 for (int i = hand.size()-1; i >=0; i--) {
                     UnoCard unocard = hand.getCard(i);
                     if (unocard.getColor() == unoCardTgtColor || 
@@ -74,21 +77,22 @@ public class UnoPlayer {
               return null;
             }
             
+          //Is Card to Match WD4?
             if(spC.unoCardWildDrawFour(prev)) {
-                int unoCardTgtColor = spC.randomColor();
+                int unoCardTgtColor = UnoV2.getWildColor();
                 System.out.println("unoCardTgtColor into WD4 "
                         + "SearchForMatch " 
                         + UnoCard.getColors()[unoCardTgtColor]);
                 for (int i = hand.size()-1; i >=0;i--) {
                     UnoCard unocard = hand.getCard(i);
-                    if ((unocard.getColor() == unoCardTgtColor) 
+                    if ((unocard.getColor() == unoCardTgtColor)//not sure about this for wd4 
                             || spC.uCardWldorWD4(unocard)) {
                         return hand.popCard(i); //had problem bug just because I forgot the 'i' in popCard...
                     }
                 }
               return null;
             }            
-        } //end special card prev searchForMatch
+        } //end special card prev == WildorWD4 searchForMatch
         
         for (int i = 0; i < hand.size(); i++) {
             UnoCard unocard = hand.getCard(i);
@@ -103,6 +107,7 @@ public class UnoPlayer {
                 return hand.popCard(i);
             }
         }
+        
 /**     After 'filters above, only cases are unocard < 19 
  *         or unocard wild Draw4  
         sort cards that are not special cards or 

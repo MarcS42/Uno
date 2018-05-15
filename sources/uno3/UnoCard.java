@@ -4,7 +4,8 @@ package uno3;
 
 public class UnoCard extends Card {
     
-  // Class Variables that are: a) shared, and b) immutable (constants) 
+    
+// Class Variables that are: a) shared, and b) immutable (constants) 
         private static final String[] RANKS = {"0", "1", 
                 "1", "2", "2", "3", "3", "4", "4", "5", 
                 "5", "6", "6",
@@ -88,7 +89,7 @@ public class UnoCard extends Card {
       //Prev was wild and declared tgtColor
         UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
         if (spC.uCardWldorWD4(unocard2)) { 
-            unoCardTgtColor = spC.randomColor();
+            unoCardTgtColor = UnoV2.getWildColor();
             if (unoCardTgtColor == unocard1.color) {
                 return true; // > 24 => wild or wd4
                  }

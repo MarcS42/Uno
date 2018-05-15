@@ -3,9 +3,19 @@ package uno3;
 import java.util.ArrayList;
 import java.util.Random;
 
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+
 public class UnoDeck extends CardDeck {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     protected ArrayList<UnoCard> unocards;
     protected String label;
+    private String fileName = new String("c:\\temp\\unodeck.ser");
     
     public ArrayList<UnoCard> getUnocards() {
         return unocards;
@@ -87,6 +97,55 @@ public class UnoDeck extends CardDeck {
     /**
   * Begin Helper Utility Methods
   */   
+    
+    /**
+     * @param deck
+     * @return
+     */
+    public static UnoDeck cloneDeck(UnoDeck deck) {
+        ArrayList<UnoCard> deckCopy = new ArrayList<>();
+        UnoDeck deckClone = new UnoDeck("DeckCopy", deckCopy);
+        for(UnoCard d:deck.getUnocards()) {
+            deckClone.getUnocards().add(d);
+        }
+        return deckClone;
+    }
+    
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void serializeUnoDeck(UnoDeck deck) {
+        fileName= getFileName();
+
+
+        try (ObjectOutputStream oos = 
+                new ObjectOutputStream(new FileOutputStream(fileName))) {
+
+            oos.writeObject(deck);
+            System.out.println("Done");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public UnoDeck deserialzeUnoDeck() {
+        String filename = getFileName();
+
+        UnoDeck deck = null;
+
+        try (ObjectInputStream ois 
+                = new ObjectInputStream(new FileInputStream(filename))) {
+
+            deck = (UnoDeck) ois.readObject();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return deck;
+    }
     
     public void printDeck(ArrayList<UnoCard> unocards) {
         

@@ -1,10 +1,15 @@
 package uno3;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class CardDeck {
+public abstract class CardDeck implements Serializable{
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private String label;
     private ArrayList<Card> cards;
 

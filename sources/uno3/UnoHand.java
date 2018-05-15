@@ -14,6 +14,11 @@ import java.util.ArrayList;
  */
 public class UnoHand extends UnoDeck {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     /**Constructor generates a UnoHand
      * Actual constructor is in Parent Class
      * @param pileLabels
