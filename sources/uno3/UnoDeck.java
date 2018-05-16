@@ -1,21 +1,21 @@
 package uno3;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-
-public class UnoDeck extends CardDeck {
+public class UnoDeck extends CardDeck implements Serializable {
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
     protected ArrayList<UnoCard> unocards;
     protected String label;
-    private String fileName = new String("c:\\temp\\unodeck.ser");
+    private static String fileName = new String("C:\\Users\\marcs\\Desktop\\unodeck.ser");
     
     public ArrayList<UnoCard> getUnocards() {
         return unocards;
@@ -35,7 +35,7 @@ public class UnoDeck extends CardDeck {
         this.unocards = unocards;
     }
     
-    /**Full UnoDeck Constructor for 103 card UnoDeck
+    /**Full UnoDeck Constructor for 108 card UnoDeck
      * Constructor - UnoDeck with wild cards
      * Initializes ArrayList<UnoCard> unocards 
      * deck
@@ -108,22 +108,23 @@ public class UnoDeck extends CardDeck {
         for(UnoCard d:deck.getUnocards()) {
             deckClone.getUnocards().add(d);
         }
+        serializeUnoDeck(deckClone);
         return deckClone;
     }
     
-    public String getFileName() {
+    public static String getFileName() {
         return fileName;
     }
 
-    public void serializeUnoDeck(UnoDeck deck) {
+    public static void serializeUnoDeck(UnoDeck deck) {
         fileName= getFileName();
-
 
         try (ObjectOutputStream oos = 
                 new ObjectOutputStream(new FileOutputStream(fileName))) {
 
             oos.writeObject(deck);
-            System.out.println("Done");
+            System.out.println("CloneDeck Done");
+            System.out.println("");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -131,7 +132,7 @@ public class UnoDeck extends CardDeck {
 
     }
 
-    public UnoDeck deserialzeUnoDeck() {
+    public static UnoDeck deserializeUnoDeck() {
         String filename = getFileName();
 
         UnoDeck deck = null;
@@ -140,6 +141,8 @@ public class UnoDeck extends CardDeck {
                 = new ObjectInputStream(new FileInputStream(filename))) {
 
             deck = (UnoDeck) ois.readObject();
+            System.out.println("Done");
+            System.out.println("");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -147,7 +150,7 @@ public class UnoDeck extends CardDeck {
         return deck;
     }
     
-    public void printDeck(ArrayList<UnoCard> unocards) {
+    public static void printDeck(ArrayList<UnoCard> unocards) {
         
         for(UnoCard card:unocards) {
             System.out.println(card);

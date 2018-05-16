@@ -38,6 +38,7 @@ public class TestUnoV2 {
             System.out.printf("%-16s\t%-16s%n", 
                 deck.getUnocards().get(index),deckClone.getUnocards().get(index));
         }
+        System.out.println(deckClone.size());
     }
 
     

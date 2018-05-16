@@ -1,9 +1,14 @@
 package uno3;
 
+import java.io.Serializable;
 
-
-public class UnoCard extends Card {
+public class UnoCard extends Card implements Serializable{
     
+    
+/**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     
 // Class Variables that are: a) shared, and b) immutable (constants) 
         private static final String[] RANKS = {"0", "1", 

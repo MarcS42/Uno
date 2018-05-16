@@ -18,12 +18,18 @@ public class TestUnoDeck {
         }
         System.out.println();
         unoDeck1.shuffle();
+        UnoDeck.cloneDeck(unoDeck1);
 
         for (UnoCard unocard : unoDeck1.getUnocards()) {
             System.out.printf("%-16s"+" ", unocard);
             System.out.printf("%5s%n", spC.unoCardDrawTwo(unocard));
         }
         System.out.println(unoDeck1.size());
+        System.out.println();
+        
+        System.out.println("Repeat: ");
+        UnoDeck repeat = UnoDeck.deserializeUnoDeck();
+        UnoDeck.printDeck(repeat.getUnocards());
     }
     
     @SuppressWarnings("unused")
