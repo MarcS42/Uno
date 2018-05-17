@@ -144,7 +144,7 @@ public class UnoDeck extends CardDeck implements Serializable {
                 = new ObjectInputStream(new FileInputStream(filename))) {
 
             deck = (UnoDeck) ois.readObject();
-            System.out.println("Deserializatin Done");
+            System.out.println("Deserializatoin Done");
             System.out.println("");
 
         } catch (Exception ex) {

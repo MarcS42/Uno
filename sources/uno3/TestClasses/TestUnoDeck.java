@@ -22,7 +22,11 @@ public class TestUnoDeck {
         
         UnoDeck repeat = UnoDeck.deserializeUnoDeck();
         
-        System.out.printf("%-15s:%-15s:%n",unoDeck1.getLabel(),repeat.getLabel());
+        /**
+         * Print Column Headings 
+         */
+        System.out.printf("%-15s:%-15s:%n",
+                unoDeck1.getLabel(),repeat.getLabel());
         for (int i = 0; i < unoDeck1.size()-1; i++) {
             System.out.printf("%-15s\t%-15s%n", 
                     unoDeck1.getCard(i),repeat.getCard(i));
