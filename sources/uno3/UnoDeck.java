@@ -9,13 +9,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class UnoDeck extends CardDeck implements Serializable {
+    
     /**
-     * 
+     * Need to be sure that you have imported all the
+     * IO imports needed, and that all the card related
+     * classes implement Serializable
      */
     private static final long serialVersionUID = 1L;
     protected ArrayList<UnoCard> unocards;
     protected String label;
-    private static String fileName = new String("C:\\Users\\marcs\\Desktop\\unodeck.ser");
+    private static String fileName = new String("unodeck.ser");
     
     public ArrayList<UnoCard> getUnocards() {
         return unocards;
@@ -141,7 +144,7 @@ public class UnoDeck extends CardDeck implements Serializable {
                 = new ObjectInputStream(new FileInputStream(filename))) {
 
             deck = (UnoDeck) ois.readObject();
-            System.out.println("Done");
+            System.out.println("Deserializatin Done");
             System.out.println("");
 
         } catch (Exception ex) {
