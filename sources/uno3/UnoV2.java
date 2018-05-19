@@ -181,7 +181,9 @@ public class UnoV2 {
         return drawPile.popCard();
     }
     
-    /**
+    /**One of 2 main side methods that takes you out
+     * of standard play waterfall when a WD4 is played
+     * 
      * This is for when PREV card is WD4
      * Checks if next player has wd4, if not draws 4; If so,
      * it keeps track of players if > 2 WD4s are played in a row.
@@ -259,7 +261,9 @@ public class UnoV2 {
         return player; 
     }//End wildDrawFour()
         
-    /**
+    /**Second of 2 main side methods that takes you out
+     * of standard play waterfall when a D2 is played.
+     * 
      * card PREV was DrawTwo checks if next player has D2, 
      * if not draws2;
      * if so, plays D2, moves on to check following player
