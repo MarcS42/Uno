@@ -1,6 +1,7 @@
 package uno3;
 
 import java.io.Serializable;
+import static uno3.UnoSpecialCardsV2.*;
 
 public class UnoCard extends Card implements Serializable{
     
@@ -92,8 +93,8 @@ public class UnoCard extends Card implements Serializable{
      //unocard2 = PREV
         int unoCardTgtColor = 0;
       //Prev was wild and declared tgtColor
-        UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
-        if (spC.uCardWldorWD4(unocard2)) { 
+
+        if (uCardWldorWD4(unocard2)) { 
             unoCardTgtColor = UnoV2.getWildColor();
             if (unoCardTgtColor == unocard1.color) {
                 return true; // > 24 => wild or wd4
@@ -134,14 +135,14 @@ public class UnoCard extends Card implements Serializable{
      * @param unocard
      * @return
      */
-    public static int scoreCard(Card unocard) { 
-        UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
+    public static int scoreCard(UnoCard unocard) { 
+        
         int cardScore = 0;
-        if (spC.uCardWldorWD4((UnoCard) unocard)) {
+        if (uCardWldorWD4(unocard)) {
             cardScore = -50;
         }
-        int rank = ((UnoCard) unocard).getRank();
-        if (spC.specialNotWild((UnoCard) unocard)) {
+        int rank = unocard.getRank();
+        if (specialNotWild(unocard)) {
             cardScore = -20;
         } else if (rank < 20) {
             if (rank % 2 == 0) {

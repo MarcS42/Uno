@@ -2,11 +2,8 @@ package uno3.TestClasses;
 
 import uno3.UnoCard;
 import uno3.UnoDeck;
-import uno3.UnoSpecialCardsV2;
 
 public class TestUnoDeck {
-    
-    UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
     
     public TestUnoDeck() {
         UnoDeck unoDeck1;

@@ -5,24 +5,23 @@ import java.util.ArrayList;
 import uno3.UnoCard;
 import uno3.UnoDeck;
 import uno3.UnoHand;
-import uno3.UnoSpecialCardsV2;
+import static uno3.UnoSpecialCardsV2.*;
 
 public class TestUnoHand {
-    UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
     
     public TestUnoHand() {
         UnoDeck deck = new UnoDeck("UnoHand Test");
 
 //        for (UnoCard unocard : deck.getUnocards()) {
 //            System.out.printf("%-16s", unocard);
-//            System.out.printf("%5s%n", spC.unoCardWildDrawFour(unocard));
+//            System.out.printf("%5s%n", unoCardWildDrawFour(unocard));
 //        }
 //        System.out.println();
         deck.shuffle();
 
         for (UnoCard unocard : deck.getUnocards()) {
             System.out.printf("%-16s", unocard);
-            System.out.printf("%5s%n", spC.unoCardWildDrawFour(unocard));
+            System.out.printf("%5s%n", unoCardWildDrawFour(unocard));
         }
         System.out.println("------------");
 

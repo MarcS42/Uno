@@ -1,8 +1,11 @@
 package uno3;
 
 import java.util.Scanner;
-
 import java.util.ArrayList;
+
+//static import allows you to skip writing
+//class name with every method call
+import static uno3.UnoSpecialCardsV2.*;
 
 /**
  * Uno.java encapsulates the state of the game
@@ -19,7 +22,7 @@ public class UnoV2 {
     private static boolean skip;
     private boolean firstPass;
     private static int wildColor;
-    UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
+    
     
     /**
      * Constructor of Uno
@@ -200,7 +203,7 @@ public class UnoV2 {
 
                 UnoCard next = player.getHand().getCard(i);
 
-                if (spC.unoCardWildDrawFour(next)) { // check to see if he has WD4
+                if (unoCardWildDrawFour(next)) { // check to see if he has WD4
                     wd4MatchCheck = true;
                     wd4CardsPlayed++;
                     wildColor=unoWildCardColor();
@@ -279,7 +282,7 @@ public class UnoV2 {
 
                 UnoCard next = player.getHand().getCard(i);
 
-                if (spC.unoCardDrawTwo(next)) { // check to see if he has D2
+                if (unoCardDrawTwo(next)) { // check to see if he has D2
                     d2MatchCheck = true;
                     d2CardsPlayed++;
                     System.out.println(player.getName() + " plays " + next);
@@ -334,7 +337,7 @@ public class UnoV2 {
      * @return int color
      */
     public int unoWildCardColor() {
-        int color = spC.randomColor();
+        int color = randomColor();
         return color;
     }
     
@@ -354,12 +357,12 @@ public class UnoV2 {
          * Skip and Reverse because they change the order of play 
          */
         if (firstPass && 
-                spC.unoSpecialCard(prev)) {
+                unoSpecialCard(prev)) {
             firstPass = false;
-            if (spC.unoCardSkip(prev)) {
+            if (unoCardSkip(prev)) {
                 player = players.get(players.indexOf(player)+1);
             }
-            if (spC.unoCardReverse(prev)) {
+            if (unoCardReverse(prev)) {
                 toggleDirectionOfPlay();
                 player = players.get(players.size()-1);
             }
@@ -368,8 +371,8 @@ public class UnoV2 {
         /**
          * Start actions for previous card = Special
          */
-        if(spC.unoSpecialCard(prev)) {
-            if (spC.unoCardDrawTwo(prev)) {
+        if(unoSpecialCard(prev)) {
+            if (unoCardDrawTwo(prev)) {
 
                 int d2CardsPlayed = 1;
                 drawTwo(player, d2CardsPlayed);
@@ -377,7 +380,7 @@ public class UnoV2 {
                 player = nextPlayer(player);
             }
 
-            if (spC.unoCardWildDrawFour(prev)) {
+            if (unoCardWildDrawFour(prev)) {
 
                 int wd4CardsPlayed = 1;
                 drawWildDrawFour(player, wd4CardsPlayed);
@@ -396,33 +399,33 @@ public class UnoV2 {
         /**
          * Actions needed when NEXT card is special card
          */
-        if (spC.unoSpecialCard(next)) {
-            if (spC.unoCardSkip(next)) {
+        if (unoSpecialCard(next)) {
+            if (unoCardSkip(next)) {
                 skip = true;
                 playerPlaysNext(next);
             }
-            if (spC.unoCardReverse(next)) {
+            if (unoCardReverse(next)) {
                 toggleDirectionOfPlay();
                 playerPlaysNext(next);
             }
 
-            if(spC.unoCardWild(next)) {
+            if(unoCardWild(next)) {
                 wildColor=unoWildCardColor();
                 playerPlaysWldNext(next);
             }
 
-            if(spC.unoCardWildDrawFour(next)) {
+            if(unoCardWildDrawFour(next)) {
                 wildColor=unoWildCardColor();
                 playerPlaysWldNext(next);
             }
 
-            if (spC.unoCardDrawTwo(next)) {
+            if (unoCardDrawTwo(next)) {
                 playerPlaysNext(next);
             }
 
         }//End special card next
 
-        if (!spC.unoSpecialCard(next)) {
+        if (!unoSpecialCard(next)) {
             playerPlaysNext(next);            
         }
 

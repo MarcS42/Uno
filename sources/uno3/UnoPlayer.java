@@ -1,6 +1,7 @@
 package uno3;
 
 import java.util.ArrayList;
+import static uno3.UnoSpecialCardsV2.*;
 
 /**Class Player encapsulates player strategy for Uno,
  * While class Uno creates and maintains the state of the game.
@@ -60,17 +61,16 @@ public class UnoPlayer {
      * @return match from hand
      */
     public UnoCard searchForMatch(UnoCard prev) {
-        UnoSpecialCardsV2 spC = new UnoSpecialCardsV2();
         
-        if(spC.uCardWldorWD4(prev)) {
+        if(uCardWldorWD4(prev)) {
             
             //Is Card to Match wild?
-            if(spC.unoCardWild(prev)) {
+            if(unoCardWild(prev)) {
                 int unoCardTgtColor = UnoV2.getWildColor();
                 for (int i = hand.size()-1; i >=0; i--) {
                     UnoCard unocard = hand.getCard(i);
                     if (unocard.getColor() == unoCardTgtColor || 
-                            (spC.unoCardWild(unocard))) { 
+                            (unoCardWild(unocard))) { 
                         return hand.popCard(i);
                     }
                 }
@@ -78,7 +78,7 @@ public class UnoPlayer {
             }
             
           //Is Card to Match WD4?
-            if(spC.unoCardWildDrawFour(prev)) {
+            if(unoCardWildDrawFour(prev)) {
                 int unoCardTgtColor = UnoV2.getWildColor();
                 System.out.println("unoCardTgtColor into WD4 "
                         + "SearchForMatch " 
@@ -86,7 +86,7 @@ public class UnoPlayer {
                 for (int i = hand.size()-1; i >=0;i--) {
                     UnoCard unocard = hand.getCard(i);
                     if ((unocard.getColor() == unoCardTgtColor)//not sure about this for wd4 
-                            || spC.uCardWldorWD4(unocard)) {
+                            || uCardWldorWD4(unocard)) {
                         return hand.popCard(i); //had problem bug just because I forgot the 'i' in popCard...
                     }
                 }
@@ -99,10 +99,10 @@ public class UnoPlayer {
 /**      Runs thru hand looks for regular wild cards, plays 
  *            them first
  *            */
-            if (spC.unoCardWild(unocard)) { 
+            if (unoCardWild(unocard)) { 
                 return hand.popCard(i);               
 /**       Look for special cards, plays them next */
-            } else if((spC.specialNotWild(unocard)) && 
+            } else if((specialNotWild(unocard)) && 
                     UnoCard.cardsMatch(unocard, prev)) {
                 return hand.popCard(i);
             }
