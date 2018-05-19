@@ -9,6 +9,19 @@ import static uno3.UnoSpecialCardsV2.*;
 
 /**
  * Uno.java encapsulates the state of the game
+ * 
+ * Basic functioning of game is 
+ * a) start with previous card == discardPile.last; 
+ * b) try to match it with what you have; 
+ *   b1) if previous is WD4 or D2, exit standard 
+ *   play waterfall to handle these cards where 
+ *   multiple cards played in sequence changes regular 
+ *   waterfall;
+ * c) Eventually, if no Match, drawForMatch == next card;
+ * d) Next card played becomes previous card to following
+ *   player.
+ * 
+ * 
  * @author MarcSherman
  *
  */
