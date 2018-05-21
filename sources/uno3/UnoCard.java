@@ -95,7 +95,7 @@ public class UnoCard extends Card implements Serializable{
       //Prev was wild and declared tgtColor
 
         if (uCardWldorWD4(unocard2)) { 
-            unoCardTgtColor = UnoV2.getWildColor();
+            unoCardTgtColor = Uno.getWildColor();
             if (unoCardTgtColor == unocard1.color) {
                 return true; // > 24 => wild or wd4
                  }

@@ -60,7 +60,7 @@ public abstract class CardDeck implements Serializable{
        }
 
     /**Used in draw, deal(Hand, int), and 
-     *      UnoV2 Constructor.
+     *      Uno Constructor.
      * "Overloaded" 
      * Removes top card, no need to shift left
      * @return top/last card

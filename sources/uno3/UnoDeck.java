@@ -86,7 +86,7 @@ public class UnoDeck extends CardDeck implements Serializable {
         }
     }
     
-    /**Used in UnoV2 Class Constructor 
+    /**Used in Uno Class Constructor 
      * (drawPile)
      * moves all remaining cards to that 
      * given UnoHand
@@ -213,7 +213,7 @@ public class UnoDeck extends CardDeck implements Serializable {
     /**Removes AL unoCard[i], and shifts all cards 
      * above it to the left
      * 
-     * Used in UnoV2 and UnoPlayer
+     * Used in Uno and UnoPlayer
      * 
      * @param i int of tgt card in ArrayList
      * @return card removed from specific index posit.
@@ -224,7 +224,7 @@ public class UnoDeck extends CardDeck implements Serializable {
     }
     
     /**Used in draw, deal(Hand, int), and 
-     *      UnoV2 Constructor.
+     *      Uno Constructor.
      * "Overloaded" 
      * Removes top card, no need to shift left
      * @return top/last card
@@ -245,7 +245,7 @@ public class UnoDeck extends CardDeck implements Serializable {
     }
     
     /*
-     * Used in UnoV2 takeTurn() gets last card from calling CardCollection, but
+     * Used in Uno takeTurn() gets last card from calling CardCollection, but
      * doesn't remove it So it is like taking a look at the card
      */
     public UnoCard last() {

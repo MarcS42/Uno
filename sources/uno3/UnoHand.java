@@ -50,7 +50,7 @@ public class UnoHand extends UnoDeck {
     }
 
     /**
-     * Used in UnoV2 displayState()
+     * Used in Uno displayState()
      * 
      */
     public void display() {

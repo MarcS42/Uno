@@ -46,7 +46,7 @@ public class UnoPlayer {
      * @param prev - previous card played
      * @return
      */
-    public UnoCard play(UnoV2 uno, UnoCard prev) {
+    public UnoCard play(Uno uno, UnoCard prev) {
         UnoCard unocard = searchForMatch(prev);
         if (unocard == null) {
             unocard = drawForMatch(uno, prev);
@@ -66,7 +66,7 @@ public class UnoPlayer {
             
             //Is Card to Match wild?
             if(unoCardWild(prev)) {
-                int unoCardTgtColor = UnoV2.getWildColor();
+                int unoCardTgtColor = Uno.getWildColor();
                 for (int i = hand.size()-1; i >=0; i--) {
                     UnoCard unocard = hand.getCard(i);
                     if (unocard.getColor() == unoCardTgtColor || 
@@ -79,7 +79,7 @@ public class UnoPlayer {
             
           //Is Card to Match WD4?
             if(unoCardWildDrawFour(prev)) {
-                int unoCardTgtColor = UnoV2.getWildColor();
+                int unoCardTgtColor = Uno.getWildColor();
                 System.out.println("unoCardTgtColor into WD4 "
                         + "SearchForMatch " 
                         + UnoCard.getColors()[unoCardTgtColor]);
@@ -130,7 +130,7 @@ public class UnoPlayer {
       return null;
     } // End searchForMatch
     
-    public UnoCard drawForMatch(UnoV2 uno, UnoCard prev) {
+    public UnoCard drawForMatch(Uno uno, UnoCard prev) {
         while (true) {
             UnoCard unocard = uno.draw();
             System.out.println(name + " draws " + unocard);

@@ -25,7 +25,7 @@ import static uno3.UnoSpecialCardsV2.*;
  * @author MarcSherman
  *
  */
-public class UnoV2 {
+public class Uno {
     private ArrayList<UnoPlayer> players;
     private UnoPlayer player;
     private Scanner in;
@@ -48,7 +48,7 @@ public class UnoV2 {
      *         of deck to draw pile.
      * Initialize key game variables starting values.
      */
-    public UnoV2() { //Uno Constructor
+    public Uno() { //Uno Constructor
         in = new Scanner(System.in);
         players = new ArrayList<UnoPlayer>();
 
@@ -462,7 +462,7 @@ public class UnoV2 {
 
     /**
      * @param next = UnoCard play card sequence when next not wild
-     * private restricts method access to UnoV2 class
+     * private restricts method access to Uno class
      */
     private void playerPlaysNext(UnoCard next) {
         discardPile.addCard(next);
@@ -533,7 +533,7 @@ public class UnoV2 {
         }
     
     public static void main(String[] args) {
-        UnoV2 game = new UnoV2();
+        Uno game = new Uno();
         game.playGame();
 
     }
