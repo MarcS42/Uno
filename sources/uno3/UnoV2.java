@@ -472,11 +472,14 @@ public class UnoV2 {
     }
     
     /*//**
-        * Change Players
-        * Uses ArrayList method indexOf(Obj) to return current players index #
-        * Uses modulus: (current player index + 1) mod players ArrayList size
-        * @param current
-        * @return
+        * Change Players: handles skips and reverses
+        * Uses ArrayList method indexOf(Obj) to return 
+        * current players index #
+        * Uses modulus: (current player index + 1) mod 
+        * players, AL.size() 
+        * 
+        * @param current Player
+        * @return next player
         */
         public UnoPlayer nextPlayer(UnoPlayer current) {
             int indexNextPlayer;
