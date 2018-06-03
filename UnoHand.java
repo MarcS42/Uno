@@ -1,7 +1,8 @@
 package Uno2;
 
 /**
- * This is a branch from Uno2, where I am trying to clean it up
+ * This is a branch from Uno2, where I am trying
+ to clean it up
  */
 
 
@@ -12,13 +13,13 @@ import java.util.Random;
  * @author MarcSherman
  *
  */
-public class UnoHand{
+public class UnoHand extends UnoDeck{
     private String label;
     private ArrayList<UnoCard> unohand;
 
     public UnoHand(String label) {
+        unohand = super(unocards);
         this.label = label;
-        this.unohand = new ArrayList<UnoCard>();
     }
     
     public UnoCard getCard(int i) {

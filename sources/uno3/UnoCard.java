@@ -1,10 +1,17 @@
-package Uno2;
+package uno3;
 
+import java.io.Serializable;
+import static uno3.UnoSpecialCardsV2.*;
 
-
-public class UnoCard {
+public class UnoCard extends Card implements Serializable{
     
-  // Class Variables that are: a) shared, and b) immutable (constants) 
+    
+/**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
+// Class Variables that are: a) shared, and b) immutable (constants) 
         private static final String[] RANKS = {"0", "1", 
                 "1", "2", "2", "3", "3", "4", "4", "5", 
                 "5", "6", "6",
@@ -20,21 +27,19 @@ public class UnoCard {
             return RANKS;
         }
 
+       
+        private static final String[] COLORS = {"Yellow", "Blue", 
+                "Green", "Red", "Black"};
+        
         /**
          * @return the colors
          */
         public static String[] getColors() {
             return COLORS;
         }
-
-        private static final String[] COLORS = {"Yellow", "Blue", 
-                "Green", "Red", "Black"};
-
         
         private final int color; // 'final' keeps guys from messing with these and
         private final int rank; // can only assign values within a constructor
-
-    
 
     public UnoCard() { // zero-args Constructor
         this.color=0;
@@ -46,12 +51,19 @@ public class UnoCard {
      // 27 ranks (0 plus 2 of each other card including 
     //   skip, reverse, drawTwo, wild, wildDraw4)
         this.rank = rank; 
+        
     }
     
     public int getColor() {
         return this.color;
     }
 
+    /* (non-Javadoc)
+     * @see Uno2.Card#getRank()
+     * 
+     * unoCard Ranks are different than Std Deck
+     */
+    @Override
     public int getRank() {
         return this.rank;
     }
@@ -61,7 +73,7 @@ public class UnoCard {
 * (becuz toString() overrides built-in toString)   
 */    
     public static void printCard(UnoCard unocard) {
-        System.out.println(unocard);
+        System.out.printf("%-16s%n", unocard);
     }
     
     @Override
@@ -72,14 +84,18 @@ public class UnoCard {
     }
     
     /**Determines if card1 matches card2
-     * @param unocard1 Card that is potential match
-     * @param unocard2 Prev. card you are trying to match
+     * @param card1 Card that is potential match
+     * @param card2 Prev. card you are trying to match
      * @return
      */
-    public static boolean unoCardsMatch(UnoCard unocard1, UnoCard unocard2) { //unocard2 = PREV
+    public static boolean cardsMatch(UnoCard unocard1, 
+            UnoCard unocard2) { 
+     //unocard2 = PREV
         int unoCardTgtColor = 0;
-        if (unocard2.getRank() > 24) { //Prev was wild and declared tgtColor
-            unoCardTgtColor = UnoV2.getWildColor();
+      //Prev was wild and declared tgtColor
+
+        if (uCardWldorWD4(unocard2)) { 
+            unoCardTgtColor = Uno.getWildColor();
             if (unoCardTgtColor == unocard1.color) {
                 return true; // > 24 => wild or wd4
                  }
@@ -87,21 +103,23 @@ public class UnoCard {
         if (unocard1.color > 3) {
             return true; 
         } else if (unocard2.color == unocard1.color || 
-                unoCardRankConversion(unocard2) == unoCardRankConversion(unocard1)) {
+                unoCardRankConversion(unocard2) == 
+                  unoCardRankConversion(unocard1)) {
             return true;
             }
         return false;
     }
     
     /**
+     * @override
      * Positive number means c1 > c2
      * @param unocard1
      * @param unocard2
      * @return +1, 0, -1
      */
-    public static int compareUnoCards(UnoCard unocard1, 
-            UnoCard unocard2) {
-        if (unoCardRankConversion(unocard1) > 
+    public static int compareCards(UnoCard unocard1, 
+            UnoCard unocard2) { 
+        if (unoCardRankConversion( unocard1) > 
         unoCardRankConversion(unocard2)) {
             return 1;
         } else if (unoCardRankConversion(unocard1) == 
@@ -110,8 +128,33 @@ public class UnoCard {
         }
         return -1;
     }
+
+    /**
+     * Card level scoring by Uno rules
+     * Called from UnoHand
+     * @param unocard
+     * @return
+     */
+    public static int scoreCard(UnoCard unocard) { 
+        
+        int cardScore = 0;
+        if (uCardWldorWD4(unocard)) {
+            cardScore = -50;
+        }
+        int rank = unocard.getRank();
+        if (specialNotWild(unocard)) {
+            cardScore = -20;
+        } else if (rank < 20) {
+            if (rank % 2 == 0) {
+                cardScore = -rank / 2;
+            } else {
+                cardScore = -rank / 2 - 1;
+            }
+        }
+        return cardScore;
+    }
     
-/**
+    /**
  * Problem is there are 2 of each card, so need to 
  * convert array index number to comparable value
  * so that, for example a yellow 5 where 5 is 1st 5 
@@ -132,49 +175,6 @@ public class UnoCard {
         return value;
     }
     
-    /**
-     * Card level scoring by Uno rules
-     * Called from UnoHand
-     * @param card
-     * @return
-     */
-    public static int scoreCardUno(UnoCard unocard) {
-        int cardScore = 0;
-        int color = unocard.getColor();
-        if (color > 3) {
-            cardScore = -50;
-        }
-        int rank = unocard.getRank();
-        if (rank > 18 && rank < 26) {
-            cardScore = -20;
-        } else if (rank < 20) {
-            if (rank % 2 == 0) {
-                cardScore = -rank / 2;
-            } else {
-                cardScore = -rank / 2 - 1;
-            }
-
-        }
-        return cardScore;
-    }
-    
-    public static void main(String[] args) {
-//        for(int i=0; i<4; i++) {
-//            for(int j= 19; j<= 32; j++) {
-//                System.out.println(new UnoCard(i,j));
-//            }
-//        }
-        
-        UnoCard card0000 = new UnoCard();
-        System.out.println(card0000);
-        UnoCard card0110 = new UnoCard(1,10);
-        System.out.println(card0110.getColor() + " " + card0110.getRank());
-        UnoCard card0220 = new UnoCard(2,20);
-        System.out.println("Uno card equals card0110"  +" "+ card0110);
-        System.out.println("Uno card equals card0220"  +" "+ card0220);
-        System.out.println(compareUnoCards(card0110,card0220));
-
-    }
 
 }// End class UnoCard
 
