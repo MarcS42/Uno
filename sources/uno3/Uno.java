@@ -10,8 +10,10 @@ import static uno3.UnoSpecialCardsV2.*;
 /**
  * Uno.java encapsulates the state of the game
  * 
- * Basic functioning of game is 
- * a) start with previous card == discardPile.last; 
+ * Basic functioning of game is(see takeTurn() below). 
+ * a) start with previous card == discardPile.last;
+ *   a1) If it is first round of game, deal with special
+ *   cards that change the initial player from P0(skip, reverse) 
  * b) try to match it with what you have; 
  *   b1) if previous is WD4 or D2, exit standard 
  *   play waterfall to handle these cards where 
@@ -55,11 +57,23 @@ public class Uno {
         int handSize = 7;
         int numberPlayers;
 //        String playerName;
-
-        UnoDeck deck = new UnoDeck("Deck");
-        deck.shuffle();
-        UnoDeck.cloneDeck(deck);
-
+        
+/*
+ * Debugging tool lets you repeat a game with the same 
+ * Deck and initial deal. 
+ * Wild cards alter the game as 
+ * the Target Color for each Wild card played is not 
+ * memorized.
+ */
+        boolean debug = false;
+        UnoDeck deck;
+        if(!debug) {
+            deck = new UnoDeck("Deck");
+            deck.shuffle();
+            UnoDeck.cloneDeck(deck);//copies deck to file 
+            //in case need to rerun game
+        } else {deck = UnoDeck.deserializeUnoDeck();
+        }
 //        System.out.println("Enter the number of players this game: ");
 //        numberPlayers = in.nextInt();
           numberPlayers = 4; //remove later
@@ -143,12 +157,13 @@ public class Uno {
         
         System.out.println("Discard Pile:");
         int dPSize = discardPile.size();
-        if(dPSize > 15) {
-            for(int i= dPSize - 15; i <= dPSize-1; i++) {
+        if(dPSize > 10) {
+            for(int i= dPSize - 10; i <= dPSize-1; i++) {
                 UnoCard.printCard(discardPile.getCard(i));
             }
         System.out.println("");    
         } else {discardPile.display();}
+        
         System.out.println("Draw Pile:");
         System.out.println(drawPile.size() + " cards");
         System.out.println("");
@@ -361,9 +376,23 @@ public class Uno {
     public void waitForUser() {// Waits until you hit enter
         in.nextLine();
     }
-    
+//------------------------------------------------------------------------    
+    /* Basic functioning of game is(see takeTurn() below). 
+    * a) start with previous card == discardPile.last;
+    *   a1) If it is first round of game, deal with special
+    *   cards that change the initial player from P0(skip, reverse) 
+    * b) try to match it with what you have; 
+    *   b1) if previous is WD4 or D2, exit standard 
+    *   play waterfall to handle these cards where 
+    *   multiple cards played in sequence changes regular 
+    *   waterfall;
+    * c) Eventually, if no Match, drawForMatch == next card;
+    * d) Next card played becomes previous card to following
+    *   player.
+    */
     public void takeTurn() {
-        System.out.println("Player into TakeTurn() = " + player.getName());
+        System.out.println("Player into TakeTurn() = " 
+               + player.getName());
 
         UnoCard prev = discardPile.last();
 
@@ -407,9 +436,14 @@ public class Uno {
             prev = discardPile.last();
         }//End actions for previous card = Special
 
+        if(!uCardWldorWD4(prev)) {
+            System.out.println("nextPlayer() = " + 
+                    player.getName() + " prev card = " + 
+                    prev);
+        } else {System.out.println("nextPlayer() = " + 
+                player.getName() + " prev card = " + prev+ 
+                " Match " + UnoCard.getColors()[wildColor]);}
 
-        System.out.println("nextPlayer() = " + player.getName() + " prev card = " + prev);
-        
         UnoCard next = player.play(this, prev);
 
 
@@ -466,7 +500,8 @@ public class Uno {
      */
     private void playerPlaysNext(UnoCard next) {
         discardPile.addCard(next);
-        System.out.println(player.getName() + " plays " + next);
+        System.out.println(player.getName() + 
+                " plays " + next);
         System.out.println();
         player = nextPlayer(player);
     }
@@ -481,40 +516,36 @@ public class Uno {
         * @param current Player
         * @return next player
         */
-        public UnoPlayer nextPlayer(UnoPlayer current) {
-            int indexNextPlayer;
-            int indexIncrement;
-    //        System.out.println("Player into (current) nextPlayer "+ current.getName());
-    //        System.out.println("Skip = "+ skip);
-    //        System.out.println("Clockwise = "+ clockwise);
-            
-            if (skip) {
-                indexIncrement = 2;
-            } else {
-                indexIncrement = 1;
-            }
-            
-            if (clockwise) {
-                indexNextPlayer = (players.indexOf(current) + indexIncrement) % players.size();
-            } else {
-                indexNextPlayer = (players.indexOf(current) - indexIncrement) % players.size();
-                if (indexNextPlayer < 0 && players.indexOf(current) == 1) {// need to fix this when 3
-                                                                           // players, counter
-                                                                           // clockwise, and skip on
-                                                                           // currentplayer 1
-                    indexNextPlayer = players.size() - indexIncrement + 1;// 1-2=-1 => <0 =>3-2 = 1
-                                                                          // again
-                } else if (indexNextPlayer < 0) {
-                    indexNextPlayer = players.size() - indexIncrement;
-                }
-                
-            }
-          firstPass=false;  
-          skip = false;
-            
-    //        System.out.println("nextPlayer out = "+ players.get(indexNextPlayer).getName());
-          return players.get(indexNextPlayer);   
+    public UnoPlayer nextPlayer(UnoPlayer current) {
+        int indexNextPlayer;
+        int indexIncrement;
+
+        if (skip) {
+            indexIncrement = 2;
+        } else {
+            indexIncrement = 1;
         }
+
+        if (clockwise) {
+            indexNextPlayer = (players.indexOf(current) + indexIncrement) % players.size();
+        } else {
+            indexNextPlayer = (players.indexOf(current) - indexIncrement) % players.size();
+            if (indexNextPlayer < 0 && players.indexOf(current) == 1) {// need to fix this when 3
+                                                                       // players, counter
+                                                                       // clockwise, and skip on
+                                                                       // currentplayer 1
+                indexNextPlayer = players.size() - indexIncrement + 1;// 1-2=-1 => <0 =>3-2 = 1
+                                                                      // again
+            } else if (indexNextPlayer < 0) {
+                indexNextPlayer = players.size() - indexIncrement;
+            }
+        }//End 'clockwise'
+        
+        firstPass=false;  
+        skip = false;
+
+        return players.get(indexNextPlayer);   
+    }//End nextPlayer
 
         public void playGame() {
 

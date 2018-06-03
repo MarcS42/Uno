@@ -100,7 +100,7 @@ public class UnoCard extends Card implements Serializable{
                 return true; // > 24 => wild or wd4
                  }
         }
-        if (unocard1.color > 3) {
+        if (uCardWldorWD4(unocard1)) {
             return true; 
         } else if (unocard2.color == unocard1.color || 
                 unoCardRankConversion(unocard2) == 

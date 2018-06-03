@@ -56,43 +56,11 @@ public class UnoPlayer {
     
     /**
      * Searches existing hand for match to Card prev.
-     * Starts by checking if previous card was a special card
+     * 
      * @param prev card
      * @return match from hand
      */
     public UnoCard searchForMatch(UnoCard prev) {
-        
-        if(uCardWldorWD4(prev)) {
-            
-            //Is Card to Match wild?
-            if(unoCardWild(prev)) {
-                int unoCardTgtColor = Uno.getWildColor();
-                for (int i = hand.size()-1; i >=0; i--) {
-                    UnoCard unocard = hand.getCard(i);
-                    if (unocard.getColor() == unoCardTgtColor || 
-                            (unoCardWild(unocard))) { 
-                        return hand.popCard(i);
-                    }
-                }
-              return null;
-            }
-            
-          //Is Card to Match WD4?
-            if(unoCardWildDrawFour(prev)) {
-                int unoCardTgtColor = Uno.getWildColor();
-                System.out.println("unoCardTgtColor into WD4 "
-                        + "SearchForMatch " 
-                        + UnoCard.getColors()[unoCardTgtColor]);
-                for (int i = hand.size()-1; i >=0;i--) {
-                    UnoCard unocard = hand.getCard(i);
-                    if ((unocard.getColor() == unoCardTgtColor)//not sure about this for wd4 
-                            || uCardWldorWD4(unocard)) {
-                        return hand.popCard(i); //had problem bug just because I forgot the 'i' in popCard...
-                    }
-                }
-              return null;
-            }            
-        } //end special card prev == WildorWD4 searchForMatch
         
         for (int i = 0; i < hand.size(); i++) {
             UnoCard unocard = hand.getCard(i);
@@ -109,25 +77,30 @@ public class UnoPlayer {
         }
         
 /**     After 'filters above, only cases are unocard < 19 
- *         or unocard wild Draw4  
-        sort cards that are not special cards or 
+ *         or unocard wild Draw4.  
+        Sort cards that are not special cards or 
         regular wild cards to play highest first 
         */                
-      UnoHand.insertionSortUnoHand(hand);    
+        UnoHand.insertionSortUnoHand(hand);    
       
         for (int i = hand.size() - 1; i >= 0; i--) { 
             // search from end of hand as hand sorted ascending
                 UnoCard unocard = hand.getCard(i);
-                if (unocard.getRank() <= 19 
-                        && UnoCard.cardsMatch(unocard, prev)) 
+                if (!unoSpecialCard(unocard) 
+                      && UnoCard.cardsMatch(unocard, prev)) 
                 {
                     return hand.popCard(i);
-                }else if (unocard.getColor() > 3) { 
-                    // all else fails, play DrawFour
+                }
+        }
+        // all else fails, play DrawFour
+        for (int i = hand.size() - 1; i >= 0; i--) {
+            // search from end of hand as hand sorted ascending
+                UnoCard unocard = hand.getCard(i);
+                if (unoCardWildDrawFour(unocard)) { 
                    return hand.popCard(i);
                 } 
         }
-      return null;
+     return null;
     } // End searchForMatch
     
     public UnoCard drawForMatch(Uno uno, UnoCard prev) {
